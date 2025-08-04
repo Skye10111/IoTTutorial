@@ -35,7 +35,7 @@ default_config:
 logger:  
   default: info  
 ```
-- `atitude` 和 `longitude` 是您的地理位置座標。
+- `atitude` 和 `longitude` 是您的地理位置座標，而 `elevation` 是海拔高度（影響天氣預測）。
 - `unit_system` 設為 `metric` 使用公制（如 °C、公里）。
 
 完成後，重啟容器：
