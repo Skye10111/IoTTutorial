@@ -49,7 +49,7 @@ docker run --init -d \
   --restart=unless-stopped \  
   -p 8123:8123 \  
   -v /path/to/your/config:/config \  
-  home-assistant/home-assistant:stable  
+  homeassistant/home-assistant  
 ```
 使用瀏覽器訪問 `http://<你的伺服器 IP>:8123` 完成初始設定。
 
