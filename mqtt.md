@@ -69,6 +69,69 @@
   - 當同一個地點包含許多感測器的時候，用編號或者唯一識別碼來命名主題是比較合理的選擇。
     - 例如，某個廚房的裝置的 MAC 位址是 `DEADBEEFFEED`，它可以被命名成 `Home/kitchen/DEADBEEFFEED`。
 
+# MQTT 實際使用
+### 運行 MQTT Broker (Mosquitto)
+- 下載 image：`docker pull eclipse-mosquitto`
+- 建立 volume 掛載目錄：
+  ```
+  sudo mkdir -p /mosquitto/config  # 存放設定檔的目錄
+  sudo mkdir -p /mosquitto/data    # 存放數據檔的目錄
+  sudo mkdir -p /mosquitto/log     # 存放日誌檔的目錄
+  ```
+- 建立設定檔 (`/mosquitto/config/mosquitto.conf`)
+  ```
+  persistence true
+  persistence_location /mosquitto/data/
+  log_dest file /mosquitto/log/mosquitto.log
+  
+  allow_anonymous true
 
+  listener 1883
+  protocol mqtt
+  ```
+  | 參數 | 說明 |
+  | --- | ---- |
+  | `persistence` | `true` 為開啟資料存放在地端，讓通訊更穩定。 |
+  | `persistence_location` | 指定資料存放於 /mosquitto/data/ 目錄下。 |
+  | `log_dest file` | Log 會被寫到 /mosquitto/log/mosquitto.log 檔案內。 |
+  | `allow_anonymous` | 在 Mosquitto 2.0 之後預設不允許匿名使用者登入，因此要設定此選項為 `true` 才可匿名登入。 |
+  | `listener` | 掛載服務於 1883 Port。 |
+  | `protocol` | 設定  MQTT 使用 1883 Port。 |
+- 運行 MQTT Container
+  - `-p 1883:1883`： 將 MQTT 的 TCP 預設端口 (1883) 映射到主機。
+  - `p 9001:9001`：（可選) 開啟 WebSocket 支援的端口。 
+  ```
+  docker run -d \
+    --name mqtt \
+    -p 1883:1883 \
+    -v /mosquitto:/mosquitto \
+    eclipse-mosquitto
+  ```
+- 驗證 Mosquitto Broker
+  - 可以透過 Docker 容器內的 Mosquitto 工具進行測試。
+  ```
+  docker exec -it mosquitto mosquitto_sub -h localhost -t "test/topic"
+  ```
+### 運行 MQTT Client
+- Mosquitto 的 Docker 映像已包含 MQTT 客戶端工具（`mosquitto_pub` 和 `mosquitto_sub`），因此直接使用 `eclipse-mosquitto` 映像即可。
+  ```
+  docker container run -d mosquitto_sub
+  ```
+- **訂閱消息 (Subscriber)**
+  - 當 Publisher 發送消息時，Subscriber 會接收到並顯示。 
+  ```
+  docker run --rm eclipse-mosquitto mosquitto_sub -h <broker_ip> -t "test/topic"  
+  ```
+  | 參數 | 說明 |
+  | --- | ---- |
+  | `-h` | MQTT Broker 的 IP 地址（例如 `localhost` 或容器的 IP）。 |
+  | `-t` | Topic 名稱。 |
+- **發佈消息 (Publisher)**
+  ```
+  docker container run --rm eclipse-mosquitto mosquitto_pub -h <broker_ip> -t "test/topic" -m "Hello MQTT from Docker"  
+  ```
+  | 參數 | 說明 |
+  | --- | ---- |
+  | `-m` | 發送的消息內容。 |
 
 
