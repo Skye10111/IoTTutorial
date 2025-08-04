@@ -118,10 +118,16 @@
   docker container run -d mosquitto_sub
   ```
 - **訂閱消息 (Subscriber)**
-  - 當 Publisher 發送消息時，Subscriber 會接收到並顯示。 
   ```
   docker run --rm eclipse-mosquitto mosquitto_sub -h <broker_ip> -t "test/topic"  
   ```
+  - 當 Publisher 發送消息時，Subscriber 會接收到並顯示。
+  - 訂閱主題（Topic）可以是：
+    - 完整的名稱。
+    - 可搭配萬用字元，訂閱單層或者多層相關主題。
+      - `+`：匹配單一階層的主題名稱 (e.g. `home/+/temperature`、`home/+/+`)。
+      - `#`：匹配多層主題名稱，這個字元只放在名稱最後 (e.g. `home/yard/#`)。
+
   | 參數 | 說明 |
   | --- | ---- |
   | `-h` | MQTT Broker 的 IP 地址（例如 `localhost` 或容器的 IP）。 |
@@ -133,5 +139,6 @@
   | 參數 | 說明 |
   | --- | ---- |
   | `-m` | 發送的消息內容。 |
+  | `-r`| 保留 (Retain) 發布訊息，MQTT代理人將保存此主題訊息。<br/>其後如有新的訂閱者，或者之前斷線的訂閱者重新連線，都能收到最新 1 則保留訊息。 |
 
 
