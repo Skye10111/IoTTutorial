@@ -18,6 +18,11 @@ Home Assistant 作為一款開源智慧家庭中樞系統，可以支援幾乎�
 - NAS
 
 # Home Assistant 安裝方式選擇
+Home Assistant的本體，其實是架在系統 (通常為Linux) 內的Python程式，稱做 `Home Assistant Core`，通常以Docker Container來單獨安裝。
+<br/><br/>
+我們一般講的 Home Assistant 其實是由 `Home Assistant Core` 以及 `Home Assistant Supervisor`，前者是 Home Assistant 本身，而後者可以協助安裝擴充元件以及維護整個 Docker 環境。
+<br/><br/>
+官方其實推出了一個包含 Docker 以及預設設定好的完整 Linux 系統，稱作 `Home Assistant OS`，這是一個包含 Home Assistant Core 和 Supervisor 的完整系統，我們之後的安裝方式將主要以此為主。
 - **Home Assistant Operation System (HA OS)**：可以享有最完整的 Home Assistant 系統功能。
 - **Home Assistant Container**：用容器 (Container) 的方式安裝 Home Assistant，通常是透過 Docker 安裝。
 - **Home Assistant Core**：用來安裝在 Python 虛擬環境。
