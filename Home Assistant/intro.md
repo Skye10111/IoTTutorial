@@ -18,7 +18,7 @@ Home Assistant 作為一款開源智慧家庭中樞系統，可以支援幾乎�
 - NAS
 
 # Home Assistant 安裝方式選擇
-Home Assistant的本體，其實是架在系統 (通常為Linux) 內的Python程式，稱做 `Home Assistant Core`，通常以Docker Container來單獨安裝。
+Home Assistant的本體，其實是架在系統 (通常為 Linux) 內的Python程式，稱做 `Home Assistant Core`，通常以Docker Container來單獨安裝。
 <br/><br/>
 我們一般講的 Home Assistant 其實是由 `Home Assistant Core` 以及 `Home Assistant Supervisor`，前者是 Home Assistant 本身，而後者可以協助安裝擴充元件以及維護整個 Docker 環境。
 <br/><br/>
@@ -43,15 +43,16 @@ Home Assistant的本體，其實是架在系統 (通常為Linux) 內的Python程
   - Home Assistant 支援所有智慧家庭連線方式：Wi-Fi、Zigbee、Bluetooth、Thread、Matter、zWave，可以整合市面上幾乎所有的智慧家庭裝置。
 
 # 使用 Docker 安裝 Home Assistant
+- 使用主機網路模式 (`--network host`)，方便 Home Assistant 掃描本地網路中的智慧裝置（例如 Google Home、Zigbee）。
+- 使用瀏覽器訪問 `http://<你的伺服器 IP>:8123` 完成初始設定。
 ```
 docker run --init -d \ 
   --name homeassistant \  
   --restart=unless-stopped \  
-  -p 8123:8123 \  
+  --network host \  
   -v /path/to/your/config:/config \  
   homeassistant/home-assistant  
 ```
-使用瀏覽器訪問 `http://<你的伺服器 IP>:8123` 完成初始設定。
 
 # 初始設定
 - **建立使用者帳戶**：
