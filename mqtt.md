@@ -125,8 +125,8 @@
   - 訂閱主題（Topic）可以是：
     - 完整的名稱。
     - 可搭配萬用字元，訂閱單層或者多層相關主題。
-      - `+`：匹配單一階層的主題名稱 (e.g. `home/+/temperature`、`home/+/+`)。
-      - `#`：匹配多層主題名稱，這個字元只放在名稱最後 (e.g. `home/yard/#`)。
+      - `+`：匹配**單一階層**的主題名稱 (e.g. `home/+/temperature`、`home/+/+`)。
+      - `#`：匹配**多層**主題名稱，這個字元只放在名稱最後 (e.g. `home/#`)。
 
   | 參數 | 說明 |
   | --- | ---- |
@@ -141,4 +141,38 @@
   | `-m` | 發送的消息內容。 |
   | `-r`| 保留 (Retain) 發布訊息，MQTT代理人將保存此主題訊息。<br/>其後如有新的訂閱者，或者之前斷線的訂閱者重新連線，都能收到最新 1 則保留訊息。 |
 
+### 使用 MQTT 帳密
+- Mosquitto 提供了一個工具 `mosquitto_passwd`，可以用來生成帳密檔案。
+- 創建帳密檔
+  ```
+  docker container exec <broker_container_id> mosquitto_passwd -c /mosquitto/passwordfile <username>
+  ```
+  | 參數 | 說明 |
+  | --- | ---- |
+  | `-c` | 創建新的帳密檔案 (如果檔案已存在，會覆蓋原有檔案)。<br/>若只是想新增使用者到已經存在的帳密檔，不加此選項即可。 |
+  | `/mosquitto/passwordfile` | 帳密檔案的路徑。<br/>這裡假設 Mosquitto 容器內的目錄 `/mosquitto` 是可寫的。 |
+  | `<username>` | 用戶名稱，執行指令後會輸入密碼。 |
+- 確認配置檔 (`/mosquitto/config/mosquitto.conf`) 已經指向這個帳密檔案。
+  ```
+  allow_anonymous false  
+  password_file /mosquitto/passwordfile  
+  ```
+- 如果你修改了 Mosquitto 的配置檔案或新建了帳密檔案，可能需要重新啟動容器以應用更改。
+  ```
+  docker container restart <broker_container_id>  
+  ```
 
+### 建立 ACL 檔
+- ACL (Access Control List) 存取控制表是用來描述一個物件對一串列的存取權限，Mosquitto 同樣也提供這個功能。
+- 創建一個 ACL 檔 (`/mosquitto/config/acl`)
+  - 使用者 joker 只可以讀寫符合 pattern 為 `joker/#` 的 topic。
+  ```
+  user joker
+  topic readwrite joker/#
+  ```
+- 確認配置檔 (`/mosquitto/config/mosquitto.conf`) 已經指向這個帳密檔案。
+  ```
+  allow_anonymous false
+  password_file /mosquitto/config/passwd_file
+  acl_file /mosquitto/config/acl  # 加上這行
+  ```
