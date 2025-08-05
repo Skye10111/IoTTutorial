@@ -20,27 +20,61 @@ Home Assistant 提供多種方式來新增裝置（integrations），以下是�
 # 方式 2：透過 YAML 手動配置
 - 這種方式適合進階用戶，特別是當某些整合需要細節設定或不支援 UI 配置時。
 - 步驟：
-  1. **找到 Home Assistant 的配置檔案**
+  1. **確保裝置安裝完成**
+     - 根據裝置的使用手冊，進行初始設置。
+       - 如果是 Zigbee 裝置，可能需要配對至 Zigbee Hub。
+       - 如果是 MQTT 裝置，需要配置 MQTT Broker 地址。
+       - 如果是 Wi-Fi 裝置，請確保其連接到正確的 Wi-Fi SSID。
+     - 記錄裝置必要資訊
+       - 裝置的 IP 地址（通常可以在路由器的管理介面中找到）。
+       - 裝置的 API 金鑰或 Token（部分裝置需要）。
+       - MQTT Broker 的地址及登入憑據（若使用 MQTT）。
+  3. **找到 Home Assistant 的配置檔案**
      - Home Assistant 的核心配置檔案為 `configuration.yaml`，通常位於主機上的 Home Assistant 安裝目錄中。
-  2. **編輯 `configuration.yaml`**
-     - 使用文字編輯器（例如 VS Code 或 Notepad++）開啟 `configuration.yaml` 檔案。
-     - 根據整合的官方文件，新增對應的配置。例如：
+  4. **編輯 `configuration.yaml`**
+     - 根據整合的官方文件，新增對應的配置。
+     - 以燈泡（例如 Philips Hue）為例：
+       - `platform`：指定整合平台，這裡是 hue。
+       - `host`：指定燈泡的主機 IP 地址。
        ```
        light:
        - platform: hue
          host: 192.168.1.100  
        ```
-       或：
+     - 如果是 MQTT 裝置，以下是配置範例：
        ```
        mqtt:
          broker: 192.168.1.101
          username: myuser
          password: mypassword  
        ```
-  3. **檢查配置是否正確**
+     - 如果你使用的是 Zigbee 裝置
+       - 在 `configuration.yaml` 文件中新增以下配置：
+         - `usb_path`：指定 Zigbee Hub 的 USB 接口。
+         - `database_path`：指定 Zigbee 裝置的資料庫存儲位置。
+         ```
+         zha:
+           usb_path: /dev/ttyUSB0
+           database_path: /config/zigbee.db  
+         ```
+     - 為了安全，API 金鑰、密碼等敏感資訊可以存儲在 `secrets.yaml` 文件中。
+       - 在 `configuration.yaml`：
+         ```
+         mqtt:
+           broker: !secret mqtt_broker
+           username: !secret mqtt_user
+           password: !secret mqtt_password  
+         ```
+       - 在 `secrets.yaml` 中新增：
+         ```
+         mqtt_broker: 192.168.1.101
+         mqtt_user: myuser
+         mqtt_password: mypassword  
+         ```
+  5. **檢查配置是否正確**
      - 編輯完成後，回到 Home Assistant 的 UI。
      - 進入「設定」 > 「檢查配置」（Check Configuration），確認 YAML 語法無誤。
-  4. **重新啟動 Home Assistant**
+  6. **重新啟動 Home Assistant**
      - 在 Home Assistant 的「設定」 > 「系統」頁面中，選擇重新啟動（Restart）。
 
 # 方式 3：透過 HACS 安裝擴充整合
