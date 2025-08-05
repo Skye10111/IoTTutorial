@@ -33,7 +33,7 @@ Home Assistant 提供多種方式來新增裝置（integrations），以下是�
      - Home Assistant 的核心配置檔案為 `configuration.yaml`，通常位於主機上的 Home Assistant 安裝目錄中。
   4. **編輯 `configuration.yaml`**
      - 根據整合的官方文件，新增對應的配置。
-     - 以燈泡（例如 Philips Hue）為例：
+     - 以**燈泡（例如 Philips Hue）** 為例
        - `platform`：指定整合平台，這裡是 hue。
        - `host`：指定燈泡的主機 IP 地址。
        ```
@@ -41,22 +41,23 @@ Home Assistant 提供多種方式來新增裝置（integrations），以下是�
        - platform: hue
          host: 192.168.1.100  
        ```
-     - 如果是 MQTT 裝置，以下是配置範例：
+     - **MQTT 裝置**
+       - - 在 `configuration.yaml` 文件中新增以下配置。 
        ```
        mqtt:
          broker: 192.168.1.101
          username: myuser
          password: mypassword  
        ```
-     - 如果你使用的是 Zigbee 裝置
-       - 在 `configuration.yaml` 文件中新增以下配置：
-         - `usb_path`：指定 Zigbee Hub 的 USB 接口。
-         - `database_path`：指定 Zigbee 裝置的資料庫存儲位置。
-         ```
-         zha:
-           usb_path: /dev/ttyUSB0
-           database_path: /config/zigbee.db  
-         ```
+     - **Zigbee 裝置**
+       - 在 `configuration.yaml` 文件中新增以下配置。
+       - `usb_path`：指定 Zigbee Hub 的 USB 接口。
+       - `database_path`：指定 Zigbee 裝置的資料庫存儲位置。
+       ```
+       zha:
+         usb_path: /dev/ttyUSB0
+         database_path: /config/zigbee.db  
+       ```
      - 為了安全，API 金鑰、密碼等敏感資訊可以存儲在 `secrets.yaml` 文件中。
        - 在 `configuration.yaml`：
          ```
