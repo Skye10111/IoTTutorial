@@ -43,8 +43,8 @@ Home Assistant 提供多種方式來新增裝置（integrations），以下是�
   4. **重新啟動 Home Assistant**
      - 在 Home Assistant 的「設定」 > 「系統」頁面中，選擇重新啟動（Restart）。
 
-# 方式 3：透過 HACS（Home Assistant Community Store）安裝擴充整合
-- HACS 是社群開發的整合商店，提供許多非官方的整合。
+# 方式 3：透過 HACS 安裝擴充整合
+- HACS（Home Assistant Community Store）是社群開發的整合商店，提供許多非官方的整合。
 - 步驟：
   1. **安裝 HACS**
      - 確保 Home Assistant 已啟用「進階模式」（Advanced Mode）。
