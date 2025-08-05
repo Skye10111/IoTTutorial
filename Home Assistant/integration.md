@@ -103,3 +103,82 @@ Home Assistant 提供多種方式來新增裝置（integrations），以下是�
      - 點擊通知，然後按照指示完成設置。
   3. **手動檢查自動偵測**
      - 如果沒有收到通知，可以進入「設定」 > 「裝置與服務」，點擊「新增整合」來檢查是否有偵測到的裝置。
+
+
+# 實戰範例：新增 MQTT 裝置
+### 前置準備
+- 確認 MQTT Broker 已運行
+- 確認 MQTT 裝置已連接到 MQTT Broker
+- 記錄裝置的通訊主題（Topic）
+  - MQTT 使用主題（Topic）來進行裝置通訊。您需要知道每個裝置的主題。
+  - 主題通常可以在裝置的文件中找到，或通過 MQTT Broker 的工具（例如 MQTT Explorer）進行監聽。
+
+### 配置 MQTT 整合
+- 首先需要在 `configuration.yaml` 中配置 MQTT 整合，以告知 Home Assistant 連接到正確的 MQTT Broker。
+  ```
+  mqtt:  
+    broker: 192.168.1.101  
+    username: myuser  
+    password: mypassword  
+  ```
+- 重啟 Home Assistant：修改配置檔案後，進入 Home Assistant 的「設定」 > 「系統」頁面，點擊「重新啟動」（Restart）。
+- 確認 MQTT 整合是否啟用：在 Home Assistant 的 UI 中，進入「設定」 > 「裝置與服務」，檢查是否已啟用 MQTT 整合。
+
+### 新增智慧插座
+- 假設智慧插座使用 MQTT 通訊，其主題如下：
+  - 開關狀態 (state) 主題：`home/plug1/state`（值可能為 ON 或 OFF）
+  - 控制 (command) 主題：`home/plug1/set`（值可能為 ON 或 OFF）
+- 在 `configuration.yaml` 中新增以下內容：
+  ```
+  switch:  
+  - platform: mqtt                   # 使用 MQTT 平台
+    name: "智慧插座"                  # 裝置名稱，在 Home Assistant UI 中顯示
+    state_topic: "home/plug1/state"  # 裝置的狀態主題，Home Assistant 會監聽此主題以了解插座的狀態
+    command_topic: "home/plug1/set"  # 控制主題，Home Assistant 會向此主題發送指令來控制插座
+    payload_on: "ON"                 # 指定 MQTT 消息中代表「開啟」的值
+    payload_off: "OFF"               # 指定 MQTT 消息中代表「關閉」的值
+    state_on: "ON"                   # 指定裝置狀態中代表「開啟」的值
+    state_off: "OFF"                 # 指定裝置狀態中代表「關閉」的值
+    retain: true                     # 確保 MQTT Broker 保留最新狀態。
+  ```
+
+### 新增溫濕度感測器
+- 假設溫濕度感測器使用 MQTT 通訊，其主題如下：
+  - 溫度主題：`home/sensor1/temperature`
+  - 濕度主題：`home/sensor1/humidity`
+- 在 `configuration.yaml` 中新增以下內容：
+  ```
+  sensor:  
+  - platform: mqtt                           # 使用 MQTT 平台
+    name: "溫度感測器"  
+    state_topic: "home/sensor1/temperature"  # 感測器的狀態主題，Home Assistant 會監聽此主題以獲取數據
+    unit_of_measurement: "°C"                # 數值的單位，例如溫度的 °C 和濕度的 %。
+    value_template: "{{ value | float }}"    # 處理 MQTT 消息的模板，將消息值轉換為浮點數。
+  - platform: mqtt  
+    name: "濕度感測器"  
+    state_topic: "home/sensor1/humidity"  
+    unit_of_measurement: "%"  
+    value_template: "{{ value | float }}"  
+  ```
+
+### 檢查配置 & 驗證裝置
+- 檢查 YAML 語法：在 Home Assistant 的 UI 中，進入「設定」 > 「檢查配置」（Check Configuration），確認 YAML 語法是否正確。
+- 重啟 Home Assistant：修改配置檔案後，重新啟動 Home Assistant。
+- 查看裝置狀態
+  - 在 Home Assistant 的「概覽」（Overview）頁面，檢查新增的裝置是否顯示。
+  - 嘗試控制智慧插座或查看溫濕度感測器的數據。
+- 使用 MQTT 工具進行監聽：如果裝置未正確運作，可以使用 MQTT Explorer 或其他 MQTT 客戶端監聽主題，確認是否有正確的消息被傳送或接收。
+
+### (補充) MQTT Discovery 
+- 開啟 MQTT Discovery：
+  - Home Assistant 支援 MQTT Discovery（自動發現），可以讓裝置自動向 Home Assistant 報告其主題和配置。如果裝置支援 MQTT Discovery，可以在 configuration.yaml 中啟用。
+  ```
+  mqtt:  
+    discovery: true  
+    discovery_prefix: homeassistant
+  ```  
+- 檢查 MQTT Broker 日誌：如果有問題，檢查 MQTT Broker 的日誌可能有助於排查。
+- 這樣，您就能完整地配置 MQTT 整合並新增 MQTT 裝置到 Home Assistant。如果有更多問題或需要進一步說明，請隨時詢問！
+
+
+
