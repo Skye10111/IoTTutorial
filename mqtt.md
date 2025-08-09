@@ -107,11 +107,6 @@
     -v /mosquitto:/mosquitto \
     eclipse-mosquitto
   ```
-- 驗證 Mosquitto Broker
-  - 可以透過 Docker 容器內的 Mosquitto 工具進行測試。
-  ```
-  docker exec -it mqtt mosquitto_sub -h localhost -t "test/topic"
-  ```
 ### 運行 MQTT Client
 - Mosquitto 的 Docker 映像已包含 MQTT 客戶端工具（`mosquitto_pub` 和 `mosquitto_sub`）。
 - 先啟動一個  `eclipse-mosquitto` container，讓 `mosquitto_pub` 和 `mosquitto_sub` 都在裡面溝通。
@@ -119,30 +114,30 @@
   docker container run -d --name mqtt -p 1883:1883 -v /mosquitto:/mosquitto eclipse-mosquitto
   ```
 - **訂閱消息 (Subscriber)**
-  在 `A 終端` 執行以下指令，作為 Subscriber： 
-  ```
-  docker container exec mqtt mosquitto_sub -h <broker_ip> -t "test/topic"  
-  ```
-  - 當 Publisher 發送消息時，Subscriber 會接收到並顯示。
+  - 在 `A 終端` 執行以下指令，作為 Subscriber：
+    - 當 Publisher 發送消息時，Subscriber 會接收到並顯示。
+    ```
+    docker container exec mqtt mosquitto_sub -h <broker_ip> -t "test/topic"  
+    ```
   - 訂閱主題（Topic）可以是：
     - 完整的名稱。
     - 可搭配萬用字元，訂閱單層或者多層相關主題。
       - `+`：匹配**單一階層**的主題名稱 (e.g. `home/+/temperature`、`home/+/+`)。
       - `#`：匹配**多層**主題名稱，這個字元只放在名稱最後 (e.g. `home/#`)。
-
-  | 參數 | 說明 |
-  | --- | ---- |
-  | `-h` | MQTT Broker 的 IP 地址（例如 `localhost` 或容器的 IP）。 |
-  | `-t` | Topic 名稱。 |
+    
+    | 參數 | 說明 |
+    | --- | ---- |
+    | `-h` | MQTT Broker 的 IP 地址（例如 `localhost` 或容器的 IP）。 |
+    | `-t` | Topic 名稱。 |
 - **發佈消息 (Publisher)**
-  在 `B 終端` 執行以下指令，作為 Subscriber：
-  ```
-  docker container exec mqtt mosquitto_pub -h <broker_ip> -t "test/topic" -m "Hello MQTT from Docker"
-  ```    
-  | 參數 | 說明 |
-  | --- | ---- |
-  | `-m` | 發送的消息內容。 |
-  | `-r`| 保留 (Retain) 發布訊息，MQTT代理人將保存此主題訊息。<br/>其後如有新的訂閱者，或者之前斷線的訂閱者重新連線，都能收到最新 1 則保留訊息。 |
+  - 在 `B 終端` 執行以下指令，作為 Publisher：
+    ```
+    docker container exec mqtt mosquitto_pub -h <broker_ip> -t "test/topic" -m "Hello MQTT from Docker"
+    ```    
+    | 參數 | 說明 |
+    | --- | ---- |
+    | `-m` | 發送的消息內容。 |
+    | `-r`| 保留 (Retain) 發布訊息，MQTT代理人將保存此主題訊息。<br/>其後如有新的訂閱者，或者之前斷線的訂閱者重新連線，都能收到最新 1 則保留訊息。 |
 
 ### 使用 MQTT 帳密
 - Mosquitto 提供了一個工具 `mosquitto_passwd`，可以用來生成帳密檔案。
