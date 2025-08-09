@@ -21,7 +21,7 @@
 ```
 homeassistant:  
   name: My Smart Home  
-  latitude: 25.0330  
+  atitude: 25.0330  
   longitude: 121.5654  
   elevation: 10  
   unit_system: metric  
