@@ -30,11 +30,11 @@
      - 在 `configuration.yaml` 文件中新增以下配置。
        - `usb_path`：指定 Zigbee Hub 的 USB 接口。
        - `database_path`：指定 Zigbee 裝置的資料庫存儲位置。
-       ```
-       zha:
-         usb_path: /dev/ttyUSB0
-         database_path: /config/zigbee.db  
-       ```
+     ```
+     zha:
+       usb_path: /dev/ttyUSB0
+       database_path: /config/zigbee.db  
+     ```
 3. **檢查配置是否正確**
    - 編輯完成後，回到 Home Assistant 的 UI。
    - 進入「設定」 > 「檢查配置」（Check Configuration），確認 YAML 語法無誤。
