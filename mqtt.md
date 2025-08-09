@@ -113,13 +113,15 @@
   docker exec -it mqtt mosquitto_sub -h localhost -t "test/topic"
   ```
 ### 運行 MQTT Client
-- Mosquitto 的 Docker 映像已包含 MQTT 客戶端工具（`mosquitto_pub` 和 `mosquitto_sub`），因此直接使用 `eclipse-mosquitto` 映像即可。
+- Mosquitto 的 Docker 映像已包含 MQTT 客戶端工具（`mosquitto_pub` 和 `mosquitto_sub`）。
+- 先啟動一個  `eclipse-mosquitto` container，讓 `mosquitto_pub` 和 `mosquitto_sub` 都在裡面溝通。
   ```
-  docker container run -d mosquitto_sub
+  docker container run -d --name mqtt -p 1883:1883 -v /mosquitto:/mosquitto eclipse-mosquitto
   ```
 - **訂閱消息 (Subscriber)**
+  在 `A 終端` 執行以下指令，作為 Subscriber： 
   ```
-  docker run --rm eclipse-mosquitto mosquitto_sub -h <broker_ip> -t "test/topic"  
+  docker container exec mqtt mosquitto_sub -h <broker_ip> -t "test/topic"  
   ```
   - 當 Publisher 發送消息時，Subscriber 會接收到並顯示。
   - 訂閱主題（Topic）可以是：
@@ -133,9 +135,10 @@
   | `-h` | MQTT Broker 的 IP 地址（例如 `localhost` 或容器的 IP）。 |
   | `-t` | Topic 名稱。 |
 - **發佈消息 (Publisher)**
+  在 `B 終端` 執行以下指令，作為 Subscriber：
   ```
-  docker container run --rm eclipse-mosquitto mosquitto_pub -h <broker_ip> -t "test/topic" -m "Hello MQTT from Docker"  
-  ```
+  docker container exec mqtt mosquitto_pub -h <broker_ip> -t "test/topic" -m "Hello MQTT from Docker"
+  ```    
   | 參數 | 說明 |
   | --- | ---- |
   | `-m` | 發送的消息內容。 |
