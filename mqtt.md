@@ -110,7 +110,7 @@
 - 驗證 Mosquitto Broker
   - 可以透過 Docker 容器內的 Mosquitto 工具進行測試。
   ```
-  docker exec -it mosquitto mosquitto_sub -h localhost -t "test/topic"
+  docker exec -it mqtt mosquitto_sub -h localhost -t "test/topic"
   ```
 ### 運行 MQTT Client
 - Mosquitto 的 Docker 映像已包含 MQTT 客戶端工具（`mosquitto_pub` 和 `mosquitto_sub`），因此直接使用 `eclipse-mosquitto` 映像即可。
