@@ -35,7 +35,7 @@ default_config:
 logger:  
   default: info  
 ```
-- `atitude` 和 `longitude` 是您的地理位置座標，而 `elevation` 是海拔高度（影響天氣預測）。
+- `atitude` 和 `longitude` 是您的地理位置座標，而 `elevation` 是海拔高度（公尺，影響天氣預測）。
 - `unit_system` 設為 `metric` 使用公制（如 °C、公里）。
 - `default_config` 啟用預設功能，包括：設備自動發現、日誌記錄、界面設置等。
   - 如果希望禁用某些功能（例如自動發現），可以移除 default_config 並手動啟用所需功能。
