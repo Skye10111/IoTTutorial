@@ -5,15 +5,15 @@
 - 簡介：[這裡](./Home%20Assistant/intro.md)
 - 安裝：[這裡](./Home%20Assistant/install.md)
 - 基本配置：[這裡](./Home%20Assistant/basicConfig.md)
-- **整合**
+- **整合 (integration)**
+  - 基本介紹：[這裡](./Home%20Assistant/integration/basic.md) 
   - MQTT
-    - 基本介紹：[這裡](./Home%20Assistant/integration/basic.md)
     - 加入 MQTT 裝置：[這裡](./Home%20Assistant/integration/mqtt.md)
   - Zigbee
   - Google Home
-- **自動化**
+- **自動化 (automation)**
   - 基本介紹：[這裡](./Home%20Assistant/automation/basic.md)
-- **通知**
+- **通知 (notification)**
   - 基本介紹：[這裡](./Home%20Assistant/notification/basic.md)
 
 # 實際使用
