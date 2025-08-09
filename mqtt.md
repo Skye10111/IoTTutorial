@@ -159,6 +159,11 @@
   ```
   docker container restart <broker_container_id>  
   ```
+- 測試帳密訂閱與發布
+  - 由於已設定為不可匿名登入，所以要指定**帳號** (`-u`)和**密碼** (`-P`，注意是大寫 P)。
+  ```
+  mosquitto_sub -h localhost -t Try/MQTT/Docker -u <username> -P <password>
+  ```
 
 ### 建立 ACL 檔
 - ACL (Access Control List) 存取控制表是用來描述一個物件對一串列的存取權限，Mosquitto 同樣也提供這個功能。
