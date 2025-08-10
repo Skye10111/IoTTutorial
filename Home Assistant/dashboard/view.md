@@ -70,6 +70,22 @@ views:                  # 為一個列表，每個項目代表一個視圖
     cards:                   # 為一個列表，每個項目代表一個卡片 (在該視圖中顯示)
       # ...
 ```
+### 視圖的配置變數  
+| 變數 | 類型 | 必填 | 描述 |  
+|-----|-----|------|-----|  
+| `views` | list | 必填 | 所有視圖的配置列表。 |  
+| `type` | string | 可選（默認 masonry） | 視圖的類型。 |  
+| `title` | string | 必填 | 子視圖的標題或名稱。 |  
+| `badges` | list | 可選 | 要顯示為實體章的實體 ID 或實體章對象列表。<br/>**注意：徽章在 panal 模式下不顯示。** |  
+| `cards` | list | 可選 | 要在此子視圖中顯示的卡片列表。 |  
+| `path` | string | 可選 (default: view index) | 用於 URL 的路徑。 |  
+| `icon` | string | 可選 | **僅適用於「視圖」，不適用於「子視圖」。** <br/>使用 [Material Design Icons](https://materialdesignicons.com/) 的圖示名稱。 |  
+| `background` | map | 可選 | 設置視圖背景的樣式。                                                                          |  
+| `theme` | string | 可選 | 設定此視圖及其卡片的主題。 |  
+| `visible` | boolean 或 list | 可選 | 隱藏/顯示此視圖分頁，適用於所有用戶或特定用戶。 |  
+| `subview` | boolean | 可選 (默認 false) | 將此視圖標記為「子視圖」。 |  
+| `back_path` | string | 可選 | **僅適用於「子視圖」。** <br/>點擊返回按鈕時導航到的自訂路徑。  |  
+
 ### 視圖的類型
 ```
 - title: Map     # Map 視圖
@@ -161,3 +177,20 @@ views:                  # 為一個列表，每個項目代表一個視圖
       example:    
         lovelace-background: center / cover no-repeat url("/local/background.png") fixed  
   ``` 
+
+
+# 子視圖（Subview）
+- 可以將視圖標記為「Subview」。子視圖**不會顯示**在側邊欄頂部的導航欄中。
+  ```
+  - title: Map
+    subview: true  # 將視圖標記為子視圖
+  ``` 
+- 子視圖通常用於顯示詳細信息，並可以**通過支持 navigation 操作的卡片從其他視圖中連結到子視圖**。
+  - 例如：在一個視圖中顯示幾個恆溫器，並在子視圖中顯示供暖/制冷設備的詳細狀態信息。
+- 默認情況下，在子視圖點擊返回按鈕會返回到之前的視圖，但您可以自訂返回路徑（`back_path`）。
+  ```
+  - title: Map
+    subview: true
+    back_path: /lovelace/home  # 點擊返回按鈕會到 /lovelace/home 視圖
+  ```
+
