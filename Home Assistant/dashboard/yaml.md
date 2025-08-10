@@ -47,7 +47,7 @@ lovelace:
   dashboards:                     # 用於定義多個 Lovelace 儀表板
     lovelace-generated:               # 儀表板的名稱，必須包含 hyphen (-)
       mode: yaml                          # 此儀表板使用 YAML mode
-      filename: notexist.yaml             # 配置檔名 (在 /config 目錄下面)
+      filename: notexist.yaml             # 此儀表板的配置檔 (在 /config 目錄下面)
       title: Generated                    # 此儀表板的標題，會顯示在 sidebar 中
       icon: mdi:tools                     # 為儀表板分配圖標，使用的是 Material Design Icons (MDI) 的名稱 (如 mdi:tools)
       show_in_sidebar: true               # 是否在左側 sidebar 顯示此儀表板 (true 或 false) 
