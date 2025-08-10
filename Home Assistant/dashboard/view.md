@@ -194,3 +194,27 @@ views:                  # 為一個列表，每個項目代表一個視圖
     back_path: /lovelace/home  # 點擊返回按鈕會到 /lovelace/home 視圖
   ```
 
+# YAML 配置範例
+### 視圖範例
+```
+- title: Living room
+  badges:
+    - device_tracker.demo_paulus
+    - entity: light.ceiling_lights
+      name: Ceiling Lights
+      icon: mdi:bulb
+    - entity: switch.decorative_lights
+      image: /local/lights.png
+```
+### 子視圖範例
+```
+- title: "Energieprijzen"
+  path: "energieprijzen"
+  subview: true
+  back_path: "/ui-data/climate"
+
+  cards:
+    - type: entities
+      entities:
+        - sensor.today_avg_price
+```
