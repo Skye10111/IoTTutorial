@@ -7,7 +7,7 @@
 - 基本配置：[這裡](./Home%20Assistant/basicConfig.md)
 - **儀表板 (dashboard)**
   -  簡介：[這裡](./Home%20Assistant/dashboard/intro.md)
-  -  使用 YAML 編輯 dashboard：[這裡](./Home%20Assistant/dashboard/yaml.md)
+  -  使用 YAML 編輯儀表板：[這裡](./Home%20Assistant/dashboard/yaml.md)
   -  視圖 (view)：[這裡](./Home%20Assistant/dashboard/view.md)
 - **整合 (integration)**
   - 基本介紹：[這裡](./Home%20Assistant/integration/basic.md) 
