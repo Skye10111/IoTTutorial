@@ -212,7 +212,6 @@ views:                  # 為一個列表，每個項目代表一個視圖
   path: "energieprijzen"
   subview: true
   back_path: "/ui-data/climate"
-
   cards:
     - type: entities
       entities:
