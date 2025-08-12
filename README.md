@@ -9,6 +9,7 @@
   -  簡介：[這裡](./Home%20Assistant/dashboard/intro.md)
   -  使用 YAML 編輯儀表板：[這裡](./Home%20Assistant/dashboard/yaml.md)
   -  視圖 (view)：[這裡](./Home%20Assistant/dashboard/view.md)
+  -  卡片 (card)：[這裡](./Home%20Assistant/dashboard/card.md)
 - **整合 (integration)**
   - 基本介紹：[這裡](./Home%20Assistant/integration/basic.md) 
   - MQTT
