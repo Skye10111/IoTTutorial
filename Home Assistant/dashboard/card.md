@@ -151,7 +151,6 @@ tap_action:
 ```
 hold_action:  
   action: toggle   # 點擊並長按卡片物件時執行的動作
-  <其他選項>
   navigation_path: /lovelace/0/                 # (可選) 當 action 為 navigate 時，點擊要導航到的頁面路徑
   navigation_replace: false                     # (可選) 當 action 為 navigate 時，是否在歷史記錄中用新頁面替換當前頁面（ boolean 值）
   url_path: https://example.com                 # (可選) 當 action 為 url 時，點擊要打開的 URL
