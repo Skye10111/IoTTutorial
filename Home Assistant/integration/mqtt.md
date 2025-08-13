@@ -50,39 +50,33 @@ mqtt:
     <td><a href="#">Button</a></td>
     <td><a href="#">Camera</a></td>
     <td><a href="#">Climate (HVAC)</a></td>
-  </tr>
-  <tr>
     <td><a href="#">Cover</a></td>
     <td><a href="#">Device tracker</a></td>
     <td><a href="#">Event</a></td>
+  </tr>
+  <tr>  
     <td><a href="#">Fan</a></td>
     <td><a href="#">Humidifier</a></td>
-  </tr>
-  <tr>
     <td><a href="#">Image</a></td>
     <td><a href="#">Lawn mower</a></td>
     <td><a href="#">Light</a></td>
     <td><a href="#">Lock</a></td>
     <td><a href="#">Notify</a></td>
+    <td><a href="#">Number</a></td>
   </tr>
   <tr>
-    <td><a href="#">Number</a></td>
     <td><a href="#">Scene</a></td>
     <td><a href="#">Select</a></td>
     <td><a href="#">Sensor</a></td>
     <td><a href="#">Siren</a></td>
-  </tr>
-  <tr>
     <td><a href="#">Switch</a></td>
     <td><a href="#">Text</a></td>
     <td><a href="#">Update</a></td>
     <td><a href="#">Vacuum</a></td>
-    <td><a href="#">Valve</a></td>
   </tr>
   <tr>
+    <td><a href="#">Valve</a></td>
     <td><a href="#">Water heater</a></td>
-    <td><a href="#"></a></td>
-    <td><a href="#"></a></td>
     <td><a href="#"></a></td>
     <td><a href="#"></a></td>
   </tr>
