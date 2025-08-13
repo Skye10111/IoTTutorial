@@ -12,6 +12,9 @@ MQTT 整合的工作流程：
 3. **Entity**：設備的屬性（如燈泡的開關狀態和亮度）被定義為實體，這些實體是 HA 中的基本操作單元。
 4. **Service**：使用服務（如 `mqtt.publish` 或 `light.turn_on`）控制實體（例如打開燈泡或調整亮度）。
 
+${\text{{\color{red}MQTT Device 和 entity 可以透過 MQTT discovery 或者手動使用 YAML 文件進行配置。}}}$
+
+
 # 加入 MQTT 整合
 ```
 1. 設定 --> 裝置與服務 --> 在右下角點選「新增整合」按鈕
