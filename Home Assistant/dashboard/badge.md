@@ -19,6 +19,20 @@
    - 可用條件與 conditional card 中的條件相同。
 ```
 
+# 實體章的基本 YAML 配置格式
+```
+views:  
+  - title: 主頁  
+    path: home
+    badges:                     # 實體章列表
+      - type: entity            # 實體章種類 (entity、entity-filter)
+        # ... 其他實體章配置
+      # ...
+    cards:  
+      # ...
+```
+
+
 # 實體章種類
 ### Entity badge
 Entity badge 可**顯示實體的狀態，並支持操作功能**。
