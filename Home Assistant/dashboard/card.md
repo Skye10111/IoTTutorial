@@ -150,22 +150,21 @@ tap_action:
 - 預設 tap action 為 `more-info`。
 ```
 hold_action:  
-  action: toggle                                # 點擊並長按卡片物件時執行的動作
-  navigation_path: /lovelace/0/                 # (可選) 當 action 為 navigate 時，點擊要導航到的頁面路徑
-  navigation_replace: false                     # (可選) 當 action 為 navigate 時，是否在歷史記錄中用新頁面替換當前頁面（ boolean 值）
-  url_path: https://example.com                 # (可選) 當 action 為 url 時，點擊要打開的 URL
-  perform_action: media_player.media_play_pause # (可選) 當 action 為 perform-action 時，點擊要執行的服務
-  data:                                         # (可選) 當 action 為 perform-action 時，執行服務時的額外數據
-    brightness: 100
-  target:                                       # (可選) 當 action 為 perform-action 時，指定行動的目標(實體)
-    entity_id: media_player.living_room
-  pipeline_id: preferred                        # (可選) 當 action 為 assist 時，語音助理使用的管道 ID，可為 last_used、preferred 或管道 ID
-  start_listening: true                         # (可選) 當 action 為 assist 時，打開助理窗口 (assist dialog) 時是否立即開始聆聽語音命令。
-  entity: light.kitchen                         # (可選) 當 action 為 more-info 時，點擊顯示另一個不同的實體的詳細資訊（而不是卡片本身綁定的實體） 
-  confirmation:                                 # (可選) 顯示確認對話框以確認操作，可以是 boolean 值或更詳細的配置。
-    text: "確定要切換燈光嗎？"
+  action: toggle              # 點擊並長按卡片物件時執行的動作
+  <其他配置選項>                # 同上「tap action」的說明
 ```
 可用的 action 類型：`more-info`、`toggle`、`perform-action`、`navigate`、`url`、`assist`、`none`。
+
+### Double Tap action
+- `double_tap_action` 是指當使用者「**快速雙擊**」卡片上的物件時執行的動作。
+- 預設 tap action 為 `more-info`。
+```
+double_tap_action:  
+  action: toggle             # 雙擊卡片物件時，執行的動作
+  <其他配置選項>               # 同上「tap action」的說明
+```
+可用的 action 類型：`more-info`、`toggle`、`perform-action`、`navigate`、`url`、`assist`、`none`。
+
 
 
 # 卡片首尾 ( Header & Footer)
