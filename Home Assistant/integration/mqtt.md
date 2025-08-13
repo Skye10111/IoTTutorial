@@ -59,7 +59,7 @@ mqtt:
     <td><a href="#">Humidifier</a></td>
     <td><a href="#">Image</a></td>
     <td><a href="#">Lawn mower</a></td>
-    <td><a href="#">Light</a></td>
+    <td><a href="#light-device">Light</a></td>
     <td><a href="#">Lock</a></td>
     <td><a href="#">Notify</a></td>
     <td><a href="#">Number</a></td>
@@ -77,10 +77,15 @@ mqtt:
   <tr>
     <td><a href="#">Valve</a></td>
     <td><a href="#">Water heater</a></td>
-    <td><a href="#"></a></td>
-    <td><a href="#"></a></td>
   </tr>
 </table>
 Light（燈具）、Switch（開關）、Sensor（感測器）、Binary Sensor（二元感測器）、Button（按鈕）
+
+# Light Device
+- MQTT燈光平台能讓您透過 `default` (默認)、`json` 或 `template` (模板) 的訊息架構來控制啟用了 MQTT 功能的燈光設備。
+- 以下僅介紹使用默認 (`default`) 架構控制啟用 MQTT 功能的燈光設備，它支援以下功能：
+  - 設定亮度、色溫、效果、開/關、RGB 色彩、XY 色彩、白光。
+
+
 
 
