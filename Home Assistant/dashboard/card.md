@@ -250,6 +250,23 @@ footer:
 ```
 
 # 卡片介紹
+<table>
+  <tr>
+    <td><a href="#entities-卡片列出和顯示多個設備的狀態">Entities 卡片</a></td>
+    <td><a href="#button-卡片點擊按鈕來控制設備">Button 卡片</a></td>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+  </tr>
+  <tr>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+  </tr>
+</table>
+
 ### Entities 卡片：列出和顯示多個設備的狀態
 這種類型的卡片適合顯示多個設備的狀態，例如燈光、開關、感測器等。
 ```
