@@ -111,12 +111,12 @@ views:
       - type: <卡片 1 類型>  
         title: <卡片 1 的標題>                   # (可選）
         name: <卡片 1 的名稱或顯示的自定義文字>     #（可選）
-        icon: <顯示的圖標>                       # （可選）某些卡片需要
-        entities: <列出與卡片 1 相關的實體>        # （可選) 某些卡片需要 
+        icon: <顯示的圖標>                       #（可選）某些卡片需要
+        entities: <列出與卡片 1 相關的實體>        #（可選) 某些卡片需要 
       - type: <卡片 2 類型>
         # ... 其他卡片 2 的配置
 ```
-### Entities 卡片: 列出和顯示多個設備的狀態
+### Entities 卡片：列出和顯示多個設備的狀態
 這種類型的卡片適合顯示多個設備的狀態，例如燈光、開關、感測器等。
 ```
 type: entities                   # entities 卡片
@@ -129,7 +129,7 @@ entities:                        # 列出需要顯示的實體。每個實體可
   - entity: sensor.temperature  
     name: 室內溫度  
 ```
-### Button 卡片: 點擊按鈕來控制設備
+### Button 卡片：點擊按鈕來控制設備
 這種類型的卡片適合用於交互，比如開關燈光或啟動場景。
 ```
 type: button                     # button 卡片
@@ -137,7 +137,7 @@ entity: light.living_room        # 需要控制的設備（例如燈光或開關
 name: 開關客廳燈  
 icon: mdi:lightbulb              # 按鈕的圖示（使用 Material Design Icons）
 ```
-### Gauge 卡片: 顯示數值型數據的可視化
+### Gauge 卡片：顯示數值型數據的可視化
 這種類型的卡片非常適合用來顯示**數值型數據的可視化**，例如溫度、濕度、電池電量等數據。
 ```
 type: gauge                      # gauge 卡片
@@ -150,12 +150,12 @@ severity:                        # 定義不同顏色的範圍
   yellow: 60                        # 黃色：60 ~ 80
   red: 80                           # 紅色：80 以上
 ```
-### Custom 卡片: 自定義卡片
+### Custom 卡片：自定義卡片
 自定義卡片通常需要安裝額外的外掛（例如 `HACS`）。
 ```
 # 範例： 使用 custom:grid-layout 卡片（需安裝 grid-layout 外掛）
 type: custom:grid-layout  
-cards:                                # 在自定義卡片中嵌套其他卡片
+cards:                           # 在自定義卡片中嵌套其他卡片
   - type: entities  
     title: 我的設備狀態  
     entities:  
