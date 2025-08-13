@@ -1,5 +1,6 @@
 # 簡介
-- 每個儀表板均由卡片所組成。
+- Dashboard 由多個**視圖 (views)** 組成，每個視圖又包含多個**卡片 (cards)**。
+- 卡片是一種模組化的視覺元素，用來顯示和交互 HA 的各種設備或數據。
 - 卡片類型多種多樣，每種都有各自的配置選項。它們可以根據功能進行分類。
   - 根據特定設備類型或服務：<br/>
     <table>
@@ -98,6 +99,76 @@
    - 如果需要修改卡片配置，打開添加卡片的視圖，自定義卡片的行為、標題、頁腳或其他功能（具體功能支持需參考卡片類型文檔）。
 ```
 
+
+# 卡片的 YAML 配置格式
+### 基本配置格式
+卡片在 YAML 中的配置通常具有以下基本結構。
+```
+views:  
+  - title: 主頁  
+    path: home  
+    cards:  
+      - type: <卡片 1 類型>  
+        title: <卡片 1 的標題>                   # (可選）
+        name: <卡片 1 的名稱或顯示的自定義文字>     #（可選）
+        icon: <顯示的圖標>                       # （可選）某些卡片需要
+        entities: <列出與卡片 1 相關的實體>        # （可選) 某些卡片需要 
+      - type: <卡片 2 類型>
+        # ... 其他卡片 2 的配置
+```
+### Entities 卡片: 列出和顯示多個設備的狀態
+這種類型的卡片適合顯示多個設備的狀態，例如燈光、開關、感測器等。
+```
+type: entities                   # entities 卡片
+title: 我的設備狀態  
+entities:                        # 列出需要顯示的實體。每個實體可以自定義名稱（name）。
+  - entity: light.living_room  
+    name: 客廳燈  
+  - entity: switch.kitchen  
+    name: 廚房開關  
+  - entity: sensor.temperature  
+    name: 室內溫度  
+```
+### Button 卡片: 點擊按鈕來控制設備
+這種類型的卡片適合用於交互，比如開關燈光或啟動場景。
+```
+type: button                     # button 卡片
+entity: light.living_room        # 需要控制的設備（例如燈光或開關）
+name: 開關客廳燈  
+icon: mdi:lightbulb              # 按鈕的圖示（使用 Material Design Icons）
+```
+### Gauge 卡片: 顯示數值型數據的可視化
+這種類型的卡片非常適合用來顯示**數值型數據的可視化**，例如溫度、濕度、電池電量等數據。
+```
+type: gauge                      # gauge 卡片
+entity: sensor.temperature       # 數值型的感測器（例如溫度、濕度）。
+name: 室內溫度  
+min: 0                           # 設定指針的最小值
+max: 100                         # 設定指針的最大值
+severity:                        # 定義不同顏色的範圍
+  green: 20                         # 綠色：20 以下
+  yellow: 60                        # 黃色：60 ~ 80
+  red: 80                           # 紅色：80 以上
+```
+### Custom 卡片: 自定義卡片
+自定義卡片通常需要安裝額外的外掛（例如 `HACS`）。
+```
+# 範例： 使用 custom:grid-layout 卡片（需安裝 grid-layout 外掛）
+type: custom:grid-layout  
+cards:                                # 在自定義卡片中嵌套其他卡片
+  - type: entities  
+    title: 我的設備狀態  
+    entities:  
+      - entity: light.living_room  
+        name: 客廳燈  
+  - type: gauge  
+    entity: sensor.temperature  
+    name: 室內溫度  
+    min: 0  
+    max: 100  
+```
+
+
 # 卡片行為 (card action) 
 部分卡片支援 Actions 功能，這些功能可以讓使用者設定在卡片內的某個物件上「點擊 (tap)」或「長按 (hold)」時會發生什麼操作。以下是支援 Actions 功能的卡片列表，以及它們的基本功能介紹：
 | 卡片 | 說明 |
@@ -113,6 +184,17 @@
 | **Picture Glance** (圖片概覽卡片) | 顯示圖片並附帶多個實體的狀態，支援點擊或長按動作。 |
 | **Tile** (磁磚卡片) | 以簡潔的磁磚樣式顯示實體狀態，可用於快速操作。 |
 | **Weather Forecast** (天氣預報卡片) | 顯示天氣預報，支持點擊動作，例如導航至更詳細的天氣資訊。 |
+例如，在 button card 上面設定 tap 和 hold 兩個 action：
+```
+cards:  
+  - name: Watch Netflix  
+    entity: script.netflix  
+    type: button  
+    tap_action:  
+      action: toggle  
+    hold_action:  
+      action: more-info 
+```
 
 ### Tap action 
 - tap_action 是用於定義當使用者「**點擊**」卡片上的物件時，會執行什麼操作的配置。
@@ -143,17 +225,6 @@ tap_action:
 | `url` | 打開指定的 URL（例如外部網站或文件）。<br/>配置選項：`url_path`。 |
 | `assist` | 打開 HA 的語音助理窗口，並執行管道 (`pipeline_id`) 或開始聆聽語音命令 (`start_listening`)。 |
 | `none` | 不執行任何操作，適合用於純展示的卡片。 |
-例如，在 button card 上面設定 tap 和 hold 兩個 action：
-```
-cards:  
-  - name: Watch Netflix  
-    entity: script.netflix  
-    type: button  
-    tap_action:  
-      action: toggle  
-    hold_action:  
-      action: more-info 
-```
 
 ### Hold action
 - `hold_action` 指的是當使用者「**點擊並長按（持續至少半秒）**」卡片上的物件，並釋放後執行的操作。
