@@ -45,7 +45,7 @@ mqtt:
 # 常見的 MQTT Device
 <table>
   <tr>
-    <td><a href="#">Alarm control panel</a></td>
+    <td><a href="">Alarm control panel</a></td>
     <td><a href="#">Binary sensor</a></td>
     <td><a href="#">Button</a></td>
     <td><a href="#">Camera</a></td>
@@ -83,8 +83,70 @@ Light（燈具）、Switch（開關）、Sensor（感測器）、Binary Sensor�
 
 # Light Device
 - MQTT燈光平台能讓您透過 `default` (默認)、`json` 或 `template` (模板) 的訊息架構來控制啟用了 MQTT 功能的燈光設備。
-- 以下僅介紹使用默認 (`default`) 架構控制啟用 MQTT 功能的燈光設備，它支援以下功能：
-  - 設定亮度、色溫、效果、開/關、RGB 色彩、XY 色彩、白光。
+- 以下僅介紹**使用默認 (`default`) 架構**控制啟用 MQTT 功能的燈光設備，它支援以下功能：設定亮度、色溫、效果、開/關、RGB 色彩、XY 色彩、白光。
+
+### 基本配置
+- 在理想情況下，MQTT 設備應該有一個 `state_topic`（狀態主題）來發布狀態變更。
+- 如果這些訊息使用了 `RETAIN` 標誌，MQTT 燈光在訂閱後會立即收到正確的狀態更新並啟動。
+  - 如果沒有使用 `RETAIN` 標誌，開關的初始狀態將未知。
+- MQTT device 可以使用 `None` payload 重置當前狀態為 `unknown`。
+
+在 `configuration.yaml` 文件中添加以下內容：
+```
+mqtt:
+  - light:                                        # 燈光 MQTT device
+      command_topic: "office/rgb1/light/switch"   # 用來控制開關的 MQTT topic
+```
+更改 `configuration.yaml` 後，請重啟 Home Assistant 以使用更改。
+
+### 參數說明
+- 可用性相關參數
+  | **參數** | **重要性** | **說明** |
+  | ------- | ---- | -------- |
+  | `availability_topic` | 可選 | (字串) 訂閱以接收設備可用性（在線/離線）狀態更新的 MQTT 主題。 |
+  | `availability` | 可選 | (列表) 一組 MQTT 主題，用於訂閱設備的在線或離線 (online/offline) 狀態更新<br/>**配置了此選項，則不能同時使用 `availability_topic`** |
+  | `payload_available` | 可選 | (字串) 當設備處於「可用狀態」時，接收到的 MQTT payload (默認 `online`) |
+  | `payload_not_available` | 可選 | (字串) 當設備處於「不可用狀態」時，接收到的 MQTT payload (默認 `offline`) |
+  | `value_template` | 可選 | (字串) 定義一個模板，模板的結果將與 `payload_available` 和 `payload_not_available` 進行比較，以確定設備的可用性。 |
+  | `availability_mode` | 可選 | 將實體設置為「可用」所需的條件。<br/>`all`：只有當**所有配置的可用性主題**都收到 `payload_available` 時，設備才會被標記為在線。<br/>`any`：只要**至少有一個配置的可用性**主題收到 `payload_available`，設備就會被標記為在線。<br/>`latest`：最近一次收到的 `payload_available` 或 `payload_not_available` 控制設備的可用性。 |
+  ```
+  light:  
+    name: "Bedroom Light"  
+    command_topic: "home/bedroom/light/switch"  
+    availability:                               # 一組 MQTT 主題列表，用於訂閱設備的在線或離線 (online/offline) 狀態更新
+      - topic: "home/bedroom/light/state"           # 訂閱設備 在線/離線狀態 更新的 MQTT 主題。
+        payload_available: "online"                 # (可選，默認 online)  當設備處於「可用狀態」時，接收到的 MQTT payload
+        payload_not_available: "offline"            # (可選，默認 offline) 當設備處於「不可用狀態」時，接收到的 MQTT payload
+        value_template: "{{ value_json.status }}"   # (可選) 定義一個模板，模板的結果將與 payload_available 和 payload_not_available 進行比較，以確定設備的可用性。
+
+  # 模板 "{{ value_json.status }}" 說明
+  # 如果消息是 JSON 格式，value_json 允許你直接訪問 JSON 中的鍵值對。
+  # value_json.status 表示提取 JSON 消息中的 status 屬性。
+  # 例如 {"status": "online", "brightness": 255 } 會提取 status 屬性的值 "online"。
+  ```
+
+
+### 範例
+# 支援亮度和 RGB 燈光
+```
+mqtt:  
+  - light:                                                      
+      name: "Office Light RGB"  
+      state_topic: "office/rgb1/light/status"  
+      command_topic: "office/rgb1/light/switch"  
+      brightness_state_topic: "office/rgb1/brightness/status"  
+      brightness_command_topic: "office/rgb1/brightness/set"  
+      rgb_state_topic: "office/rgb1/rgb/status"  
+      rgb_command_topic: "office/rgb1/rgb/set"  
+      state_value_template: "{{ value_json.state }}"  
+      brightness_value_template: "{{ value_json.brightness }}"  
+      rgb_value_template: "{{ value_json.rgb | join(',') }}"  
+      qos: 0  
+      payload_on: "ON"  
+      payload_off: "OFF"  
+      optimistic: false  
+```
+
 
 
 
