@@ -99,17 +99,47 @@ mqtt:
 ```
 更改 `configuration.yaml` 後，請重啟 Home Assistant 以使用更改。
 
-### 參數說明
-- 可用性 (available) 相關參數
-  | **參數** | **重要性** | **說明** |
-  | ------- | ---- | -------- |
-  | `availability_topic` | 可選 | (字串) 訂閱以接收設備可用性（在線/離線）狀態更新的 MQTT 主題。 |
-  | `availability` | 可選 | (列表) 一組 MQTT 主題，用於訂閱設備的在線或離線 (online/offline) 狀態更新<br/>**配置了此選項，則不能同時使用 `availability_topic`** |
-  | `payload_available` | 可選 | (字串) 當設備處於「可用狀態」時，接收到的 MQTT payload (默認 `online`) |
-  | `payload_not_available` | 可選 | (字串) 當設備處於「不可用狀態」時，接收到的 MQTT payload (默認 `offline`) |
-  | `value_template` | 可選 | (字串) 定義一個模板，模板的結果將與 `payload_available` 和 `payload_not_available` 進行比較，以確定設備的可用性。 |
-  | `availability_mode` | 可選 | 將實體設置為「可用」所需的條件。<br/>`all`：只有當**所有配置的可用性主題**都收到 `payload_available` 時，設備才會被標記為在線。<br/>`any`：只要**至少有一個配置的可用性**主題收到 `payload_available`，設備就會被標記為在線。<br/>`latest`：最近一次收到的 `payload_available` 或 `payload_not_available` 控制設備的可用性。 |
-  ```
+### 重要參數
+| **參數** | **重要性** | **說明** |
+| ------- | ---- | -------- |
+| `icon` | 可選 | 燈光 entity 的 icon。 |
+| `name` | 可選 | (字串) 燈光設備的名稱，預設 `MQTT Light`。 |
+| `command_topic` | **必填** | (字串) 發佈到此 MQTT 主題以**改變設備的開關狀態**。 |
+| `state_topic` | 可選 | (字串) 訂閱的 MQTT 主題，用於接收設備的狀態更新。<br/>如果接收到 `None` 負載，設備狀態將重置為未知。<br/>如果接收到空負載，該負載將被忽略。 |
+| `state_value_template` | 可選 | (模板) 定義一個模板，用來從 `state_topic` 接收到的消息中提取狀態值。<br/>返回值應與 `payload_on` 和 `payload_off` 匹配。|
+| `payload_on` | 可選 | (字串) 表示關閉狀態的 payload，預設 `OFF`。 |
+| `payload_off` | 可選 | (字串) 表示開啟狀態的 payload，預設 `ON`。 |
+| `qos` | 可選 | (整數) 設置接收和發佈 MQTT 消息時使用的最大 QoS（服務品質）級別，預設 `0`。 |
+| `retain` | 可選 | (boolean) 設置 MQTT 發佈的消息是否帶有保留標記（Retain Flag）。 |
+| `optimistic` | 可選 | (boolean) 是否啟用樂觀模式 (定義如下)。<br/>當 HA 發送控制命令時，不依賴於來自 `state_topic` 的狀態回應，就假設命令成功，並更新設備狀態。<br/>如果 `state_topic` 已定義，則默認為 `false`。 |
+```
+mqtt:
+  - light:
+      name: "Office light"                                     # 燈光的名稱，在 HA 中顯示為 "Office light"
+      state_topic: "office/light/status"                       # 用於接收燈光的狀態更新（例如 ON 或 OFF）的 MQTT 主題
+      command_topic: "office/light/switch"                     # 用於控制燈光開啟或關閉的 MQTT 主題
+      brightness_state_topic: 'office/light/brightness'        # 用於接收燈光亮度狀態的 MQTT 主題
+      brightness_command_topic: 'office/light/brightness/set'  # 用於設置燈光亮度的 MQTT 主題。
+      qos: 0
+      payload_on: "ON"                                         # 設置 MQTT 消息中表示燈光開啟的有效負載。
+      payload_off: "OFF"                                       # 設置 MQTT 消息中表示燈光關閉的有效負載。
+      optimistic: false                                        # 不啟用樂觀模式，HA 會等待來自 state_topic 的狀態更新以確定燈光的當前狀態
+```
+
+
+
+### 可用性 (available) 相關參數
+| **參數** | **重要性** | **說明** |
+| ------- | ---- | -------- |
+| `availability_topic` | 可選 | (字串) 訂閱以接收設備可用性（在線/離線）狀態更新的 MQTT 主題。 |
+| `availability` | 可選 | (列表) 一組 MQTT 主題，用於訂閱設備的在線或離線 (online/offline) 狀態更新<br/>**配置了此選項，則不能同時使用 `availability_topic`** |
+| `payload_available` | 可選 | (字串) 當設備處於「可用狀態」時，接收到的 MQTT payload (默認 `online`) |
+| `payload_not_available` | 可選 | (字串) 當設備處於「不可用狀態」時，接收到的 MQTT payload (默認 `offline`) |
+| `value_template` | 可選 | (字串) 定義一個模板，模板的結果將與 `payload_available` 和 `payload_not_available` 進行比較，以確定設備的可用性。 |
+| `availability_mode` | 可選 | 將實體設置為「可用」所需的條件。<br/>`all`：只有當**所有配置的可用性主題**都收到 `payload_available` 時，設備才會被標記為在線。<br/>`any`：只要**至少有一個配置的可用性**主題收到 `payload_available`，設備就會被標記為在線。<br/>`latest`：最近一次收到的 `payload_available` 或 `payload_not_available` 控制設備的可用性。<br/>(默認 `latest`) |
+```
+# 多個可用性主題
+mqtt:
   light:  
     name: "Bedroom Light"  
     command_topic: "home/bedroom/light/switch"  
@@ -118,13 +148,17 @@ mqtt:
         payload_available: "online"                 # (可選，默認 online)  當設備處於「可用狀態」時，接收到的 MQTT payload
         payload_not_available: "offline"            # (可選，默認 offline) 當設備處於「不可用狀態」時，接收到的 MQTT payload
         value_template: "{{ value_json.status }}"   # (可選) 定義一個模板，模板的結果將與 payload_available 和 payload_not_available 進行比較，以確定設備的可用性。
+    # - topic:
+    #   ...
 
-  # 模板 "{{ value_json.status }}" 說明
-  # 如果消息是 JSON 格式，value_json 允許你直接訪問 JSON 中的鍵值對。
-  # value_json.status 表示提取 JSON 消息中的 status 屬性。
-  # 例如 {"status": "online", "brightness": 255 } 會提取 status 屬性的值 "online"。
-  ```
-  ```
+# 模板 "{{ value_json.status }}" 說明
+# 如果消息是 JSON 格式，value_json 允許你直接訪問 JSON 中的鍵值對。
+# value_json.status 表示提取 JSON 消息中的 status 屬性。
+# 例如 {"status": "online", "brightness": 255 } 會提取 status 屬性的值 "online"。
+```
+```
+# 單個可用性主題
+mqtt: 
   light:  
     name: "Bedroom Light"  
     command_topic: "home/bedroom/light/switch"  
@@ -132,31 +166,58 @@ mqtt:
     payload_available: "online"
     payload_not_available: "offline"
     value_template: "{{ value_json.status }}"
-  ```
-- 亮度 (brightness) 相關參數
-  | **參數** | **重要性** | **說明** |
-  | ------- | ---- | -------- |
-  | `` |  |  |
-
-### 範例
 ```
-# 支援亮度和 RGB 燈光
+
+### 亮度 (brightness) 相關參數
+| **參數** | **重要性** | **說明** |
+| ------- | ---- | -------- |
+| `brightness_command_topic` | 可選 | (字串) 發佈到此 MQTT 主題來改變燈光亮度。 |
+| `brightness_command_template` | 可選 | (模板) 模板的結果將發佈到 `brightness_command_topic` 設定的主題。<br/>可用變數：`value`(亮度值) |
+| `brightness_scale` | 可選 | 定義 MQTT 設備的最大亮度值（即 100% 亮度），預設 `255`。|
+| `brightness_state_topic` | 可選 | (字串) 訂閱此 MQTT 主題以接收燈光的亮度狀態更新。 |
+| `brightness_value_template` | 可選 | (模板) 用來從 brightness_state_topic 提取亮度值。 |
+```
 mqtt:  
-  - light:                                                      
-      name: "Office Light RGB"  
-      state_topic: "office/rgb1/light/status"  
-      command_topic: "office/rgb1/light/switch"  
-      brightness_state_topic: "office/rgb1/brightness/status"  
-      brightness_command_topic: "office/rgb1/brightness/set"  
-      rgb_state_topic: "office/rgb1/rgb/status"  
-      rgb_command_topic: "office/rgb1/rgb/set"  
-      state_value_template: "{{ value_json.state }}"  
-      brightness_value_template: "{{ value_json.brightness }}"  
-      rgb_value_template: "{{ value_json.rgb | join(',') }}"  
-      qos: 0  
+  light:  
+    - name: "Living Room Light"  
+      state_topic: "livingroom/light/state"  
+      command_topic: "livingroom/light/switch"  
       payload_on: "ON"  
       payload_off: "OFF"  
-      optimistic: false  
+      brightness_command_topic: "livingroom/light/brightness/set"  
+      brightness_command_template: "{{ value * 2.55 }}"            # 將亮度值從百分比（0-100）轉換為設備接受的範圍（0-255）
+      brightness_state_topic: "livingroom/light/brightness/state"  
+      brightness_value_template: "{{ (value | int) / 2.55 }}"      # 將接收到的亮度值從設備的範圍（0-255）轉換為百分比（0-100）
+      brightness_scale: 100                                        # 定義亮度的最大值為 100（即 100% 亮度）
+
+# | int 是一個過濾器，將 value 變數轉換為整數類型 (例如 "128" --> 128)
+# 百分比亮度       = (0 ~ 255 的亮度值) ÷ 2.55
+# 0 ~ 255 的亮度值 = 百分比亮度 * 2.55
+```
+
+### 顏色 (color) 相關參數
+| **參數** | **重要性** | **說明** |
+| ------- | ---- | -------- |
+| `color_mode_state_topic` | 可選 | (字串) 訂閱的 MQTT 主題，用於接收燈光的色彩模式更新。<br/>默認單位為**mireds**（微倒度，153-500），如果 `color_temp_kelvin: true`，則改為 **Kelvin**（2000-6535）。 |
+| `color_mode_value_template` | 可選 | (模板) 定義一個模板，用來從 `color_mode_state_topic` 提取燈光的色彩模式。 |
+| `color_temp_state_topic` | 可選 | (字串) 訂閱的 MQTT 主題，用於接收燈光的色溫狀態更新。 |
+| `color_temp_value_template` | 可選 | (字串) 定義一個模板，用來從 `color_temp_state_topic` 提取色溫值。 |
+| `color_temp_command_template` | 可選 | (模板) 定義一個模板，用來組合消息並發佈到 `color_temp_command_topic` 主題。 |
+| `color_temp_command_topic` | 可選 | (字串) 發佈到此 MQTT 主題以更改燈光的色溫狀態。<br/>默認範圍 153 ~ 500 mireds。若 `color_temp_kelvin: true`，則為 2000 ~ 6535 Kelvin。 |
+| `color_temp_kelvin` | 可選 | (預設 false) 當設置為 `true` 時，色溫值將使用 Kelvin 單位。 |
+```
+mqtt:  
+  light:  
+    - name: "Living Room Light"  
+      state_topic: "livingroom/light/state"  
+      command_topic: "livingroom/light/switch"  
+      payload_on: "ON"  
+      payload_off: "OFF"  
+      color_temp_command_topic: "livingroom/light/colortemp/set"  
+      color_temp_command_template: "{{ value }}"  
+      color_temp_state_topic: "livingroom/light/colortemp/state"  
+      color_temp_value_template: "{{ value }}"  
+      color_temp_kelvin: false  
 ```
 
 
