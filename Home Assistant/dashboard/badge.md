@@ -18,7 +18,6 @@
 5. 如果希望此實體章僅對特定使用者或某些條件下可見，請打開【可視度】(Visibility) 標籤以設定條件。
    - 可用條件與 conditional card 中的條件相同。
 ```
-![image](https://www.home-assistant.io/images/dashboards/adding_a_badge_to_a_dashboard.webp)
 
 # 實體章種類
 ### Entity badge
