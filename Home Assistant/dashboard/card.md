@@ -143,6 +143,17 @@ tap_action:
 | `url` | 打開指定的 URL（例如外部網站或文件）。<br/>配置選項：`url_path`。 |
 | `assist` | 打開 HA 的語音助理窗口，並執行管道 (`pipeline_id`) 或開始聆聽語音命令 (`start_listening`)。 |
 | `none` | 不執行任何操作，適合用於純展示的卡片。 |
+例如，在 button card 上面設定 tap 和 hold 兩個 action：
+```
+cards:  
+  - name: Watch Netflix  
+    entity: script.netflix  
+    type: button  
+    tap_action:  
+      action: toggle  
+    hold_action:  
+      action: more-info 
+```
 
 ### Hold action
 - `hold_action` 指的是當使用者「**點擊並長按（持續至少半秒）**」卡片上的物件，並釋放後執行的操作。
