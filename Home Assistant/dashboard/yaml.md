@@ -68,7 +68,7 @@ lovelace:
       title: YAML
       icon: mdi:script
       show_in_sidebar: true
-      filename: dashboards.yaml
+      filename: dashboards.yaml   # 儀表板的 YAML 文件 (見下一段落)
 ```
 
 # 儀表板的 YAML 文件
