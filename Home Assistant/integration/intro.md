@@ -85,7 +85,7 @@ Integration
 
 ### 添加新的感測器 (Sensor)
 - 如果需要添加另一個 Workday 感測器，例如用於查看同事的假期。
-- 感測器 (Sensor) 屬於 Entity 的一種，專門用於提供數據或監控特定狀態。
+- **感測器 (Sensor) 屬於 Entity 的一種**，專門用於提供數據或監控特定狀態。
   - 它不能直接控制（不像燈或開關那樣能開啟或關閉），只能用於提供資訊。
   - 例如：
     - 溫度感測器的 Entity ID 可能是 `sensor.temperature_outdoor`。
