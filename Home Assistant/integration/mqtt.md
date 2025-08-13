@@ -14,31 +14,7 @@ MQTT 整合的工作流程：
 
 ${\text{{\color{red}MQTT Device 和 entity 可以透過 MQTT discovery 或者手動使用 YAML 文件進行配置。}}}$
 
-
-# 加入 MQTT 整合
-```
-1. 設定 --> 裝置與服務 --> 在右下角點選「新增整合」按鈕
-
-2. 從列表中選擇 MQTT。
-
-3. 按照螢幕上的指示完成設定。
-  - Broker   : MQTT broker 的主機名稱或 IP 位址。
-  - 通訊埠    : MQTT broker 所監聽的通訊埠 (預設 1883)
-  - 使用者名稱 : 登入 MQTT broker 的使用者名稱。
-  - 密碼      : 登入 MQTT broker 的密碼。
-```
-
-# 加入 MQTT Broker
-- 設定路徑：
-  ```
-  左側側邊欄 --> 設定（Settings）--> 裝置與服務（Devices & Services）--> 右下角的「新增整合」（Add Integration）--> 輸入「MQTT」
-  ```
-- 設定以下欄位： 
-  - Broker: `localhost`
-  - 通訊埠: `1883`
-  - 使用者名稱、密碼
-
-# 加入 MQTT 裝置
+# 手動配置 YAML 文件
 在 `configuration.yaml` 檔中加入 MQTT 裝置，例如：
 ```
 homeassistant:
@@ -61,4 +37,56 @@ mqtt:
   sensor:                                       # sensor 裝置
     - name: "Bedroom Temperature"               # 裝置名稱
       state_topic: "home/bedroom/temperature"   # 訂閱 home/bedroom/temperature 主題
+      # ...
+    # ...
+  #...
 ```
+
+# 常見的 MQTT Device
+<table>
+  <tr>
+    <td><a href="#">Alarm control panel</a></td>
+    <td><a href="#">Binary sensor</a></td>
+    <td><a href="#">Button</a></td>
+    <td><a href="#">Camera</a></td>
+    <td><a href="#">Climate (HVAC)</a></td>
+  </tr>
+  <tr>
+    <td><a href="#">Cover</a></td>
+    <td><a href="#">Device tracker</a></td>
+    <td><a href="#">Event</a></td>
+    <td><a href="#">Fan</a></td>
+    <td><a href="#">Humidifier</a></td>
+  </tr>
+  <tr>
+    <td><a href="#">Image</a></td>
+    <td><a href="#">Lawn mower</a></td>
+    <td><a href="#">Light</a></td>
+    <td><a href="#">Lock</a></td>
+    <td><a href="#">Notify</a></td>
+  </tr>
+  <tr>
+    <td><a href="#">Number</a></td>
+    <td><a href="#">Scene</a></td>
+    <td><a href="#">Select</a></td>
+    <td><a href="#">Sensor</a></td>
+    <td><a href="#">Siren</a></td>
+  </tr>
+  <tr>
+    <td><a href="#">Switch</a></td>
+    <td><a href="#">Text</a></td>
+    <td><a href="#">Update</a></td>
+    <td><a href="#">Vacuum</a></td>
+    <td><a href="#">Valve</a></td>
+  </tr>
+  <tr>
+    <td><a href="#">Water heater</a></td>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+    <td><a href="#"></a></td>
+  </tr>
+</table>
+Light（燈具）、Switch（開關）、Sensor（感測器）、Binary Sensor（二元感測器）、Button（按鈕）
+
+
