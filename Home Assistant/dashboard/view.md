@@ -67,7 +67,9 @@ Generated 儀表板的配置文件 (`/config/generated.yaml`)：
 views:                  # 為一個列表，每個項目代表一個視圖
   - title: Living room  # Living room 視圖
     # ... 一些視圖設定 (見下面教學)
-    cards:                   # 為一個列表，每個項目代表一個卡片 (在該視圖中顯示)
+    badges:                  # 實體章列表 (在該視圖中顯示)
+      # ...
+    cards:                   # 卡片列表 (在該視圖中顯示)
       # ...
 ```
 ### 視圖的配置變數  
