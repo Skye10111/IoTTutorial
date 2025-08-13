@@ -99,6 +99,53 @@
 ```
 
 # 卡片行為 (card action) 
+部分卡片支援 Actions 功能，這些功能可以讓使用者設定在卡片內的某個物件上「點擊 (tap)」或「長按 (hold)」時會發生什麼操作。以下是支援 Actions 功能的卡片列表，以及它們的基本功能介紹：
+| 卡片 | 說明 |
+| ---- | --- |
+| **Button** (按鈕卡片) | 顯示一個按鈕，通常用於觸發某些操作或執行服務。 |
+| **Entities** (實體列表卡片) | 顯示一組實體的狀態，可以為每個實體設置點擊或長按動作。 |
+| **Gauge** (儀表卡片) | 顯示數值的儀表式視圖，例如溫度或電量。可設定點擊動作。 |
+| **Glance** (概覽卡片) | 以簡化方式顯示多個實體的狀態，支持點擊或長按查看更多資訊。 |
+| **Light** (燈光卡片) | 專門用於控制燈光，支援點擊切換燈光開關或顯示詳細控制。 |
+| **Picture** (圖片卡片) | 顯示一張圖片，並可以設定點擊或長按動作，比如打開 URL。 |
+| **Picture Element** (圖片元素卡片) | 將互動元素（如按鈕或文字）添加到圖片上。每個元素都可設定 Actions。 |
+| **Picture Entity** (圖片實體卡片) | 顯示實體的圖片（例如相機快照），並支持點擊查看更多資訊或執行操作。 |
+| **Picture Glance** (圖片概覽卡片) | 顯示圖片並附帶多個實體的狀態，支援點擊或長按動作。 |
+| **Tile** (磁磚卡片) | 以簡潔的磁磚樣式顯示實體狀態，可用於快速操作。 |
+| **Weather Forecast** (天氣預報卡片) | 顯示天氣預報，支持點擊動作，例如導航至更詳細的天氣資訊。 |
+
+### Tap action 
+- tap_action 是用於定義當使用者「點擊」卡片上的物件時，會執行什麼操作的配置。
+- 預設 tap action 為 `toggle`，但如果實體不能被 toggle，則默認為 `more-info`。
+```
+tap_action:  
+  action: toggle                                # 點擊卡片物件時執行的動作，可為：more-info、toggle、perform-action、navigate、url、assist、none
+  navigation_path: /lovelace/0/                 # (可選) 當 action 為 navigate 時，點擊要導航到的頁面路徑
+  navigation_replace: false                     # (可選) 當 action 為 navigate 時，是否在歷史記錄中用新頁面替換當前頁面（ boolean 值）
+  url_path: https://example.com                 # (可選) 當 action 為 url 時，點擊要打開的 URL
+  perform_action: media_player.media_play_pause # (可選) 當 action 為 perform-action 時，點擊要執行的服務
+  data:                                         # (可選) 當 action 為 perform-action 時，執行服務時的額外數據
+    brightness: 100
+  target:                                       # (可選) 當 action 為 perform-action 時，指定行動的目標(實體)
+    entity_id: media_player.living_room
+  pipeline_id: preferred                        # (可選) 當 action 為 assist 時，語音助理使用的管道 ID，可為 last_used、preferred 或管道 ID
+  start_listening: true                         # (可選) 當 action 為 assist 時，打開助理窗口 (assist dialog) 時是否立即開始聆聽語音命令。
+  confirmation:                                 # (可選) 顯示確認對話框以確認操作，可以是 boolean 值或更詳細的配置。
+    text: "確定要切換燈光嗎？"
+  entity: light.kitchen                         # (可選) 當 action 為 more-info 時，點擊顯示另一個不同的實體的詳細資訊（而不是卡片本身綁定的實體） 
+```
+| 動作類型 | 說明 |
+| ------- | --- |
+| `more-info` | 顯示實體的詳細資訊彈窗，例如狀態、屬性等。 |
+| `toggle` | 切換實體的狀態，例如開啟或關閉燈光。 |
+| `perform-action` | 呼叫 HA 的服務來執行特定操作，例如暫停或播放媒體播放器。<br/>可額外使用 `data` 和 `target` 來指定服務的詳細參數。 |
+| `navigate` | 導航到 HA 的另一個視圖或頁面。<br/>配置選項：`navigation_path` 和 `navigation_replace`。 |
+| `url` | 打開指定的 URL（例如外部網站或文件）。<br/>配置選項：`url_path`。 |
+| `assist` | 打開 HA 的語音助理窗口，並執行管道 (`pipeline_id`) 或開始聆聽語音命令 (`start_listening`)。 |
+| `none` | 不執行任何操作，適合用於純展示的卡片。 |
+
+
+
 
 # 卡片首尾 ( Header & Footer)
 
