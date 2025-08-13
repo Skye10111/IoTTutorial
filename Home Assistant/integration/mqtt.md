@@ -12,8 +12,6 @@ MQTT 整合的工作流程：
 | **Entity** | 例如智能燈泡包含 2 個實體 (同時也是 MQTT topic)：<br/>- 開關狀態：`/light/bulb1/state`<br/>- 亮度：`/light/bulb1/brightness` | 1. 監控設備狀態<br/>2. 在界面上顯示數據<br/>3. 通過 service 進行操作（如：開關、調整亮度）。 |
 | **Service** | 使用 mqtt.publish 服務發送消息到 `/light/bulb1/state` 主題 (i.e. 實體) 以開關燈泡。 | 1. 控制設備（如開關燈泡、設置溫度）<br/>2. 發送自定義 MQTT 消息到特定主題 |
 
-${\text{{\color{red}MQTT Device 和 entity 可以透過 MQTT discovery 或者手動使用 YAML 文件進行配置。}}}$
-
 # 加入 MQTT integration
 ```
 1. 設定 --> 裝置與服務 --> 新增整合
@@ -25,6 +23,7 @@ ${\text{{\color{red}MQTT Device 和 entity 可以透過 MQTT discovery 或者手
    - 設置正確的 MQTT 用戶名和密碼（如果 broker 需要身份驗證）。
    - 測試連線確保設置正確。
 ```
+${\text{{\color{red}MQTT Device 和 entity 可以透過 MQTT discovery 或者手動使用 YAML 文件進行配置。}}}$
 
 # 手動配置 YAML 文件
 在 `configuration.yaml` 檔中加入 MQTT 裝置，例如：
