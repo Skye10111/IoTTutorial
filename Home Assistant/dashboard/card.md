@@ -100,7 +100,7 @@
 ```
 
 
-# 卡片的 YAML 配置格式
+# 卡片的基本 YAML 配置格式
 ### 基本配置格式
 卡片在 YAML 中的配置通常具有以下基本結構。
 ```
@@ -115,57 +115,6 @@ views:
         entities: <列出與卡片 1 相關的實體>        #（可選) 某些卡片需要 
       - type: <卡片 2 類型>
         # ... 其他卡片 2 的配置
-```
-### Entities 卡片：列出和顯示多個設備的狀態
-這種類型的卡片適合顯示多個設備的狀態，例如燈光、開關、感測器等。
-```
-type: entities                   # entities 卡片
-title: 我的設備狀態  
-entities:                        # 列出需要顯示的實體。每個實體可以自定義名稱（name）。
-  - entity: light.living_room  
-    name: 客廳燈  
-  - entity: switch.kitchen  
-    name: 廚房開關  
-  - entity: sensor.temperature  
-    name: 室內溫度  
-```
-### Button 卡片：點擊按鈕來控制設備
-這種類型的卡片適合用於交互，比如開關燈光或啟動場景。
-```
-type: button                     # button 卡片
-entity: light.living_room        # 需要控制的設備（例如燈光或開關）
-name: 開關客廳燈  
-icon: mdi:lightbulb              # 按鈕的圖示（使用 Material Design Icons）
-```
-### Gauge 卡片：顯示數值型數據的可視化
-這種類型的卡片非常適合用來顯示**數值型數據的可視化**，例如溫度、濕度、電池電量等數據。
-```
-type: gauge                      # gauge 卡片
-entity: sensor.temperature       # 數值型的感測器（例如溫度、濕度）。
-name: 室內溫度  
-min: 0                           # 設定指針的最小值
-max: 100                         # 設定指針的最大值
-severity:                        # 定義不同顏色的範圍
-  green: 20                         # 綠色：20 以下
-  yellow: 60                        # 黃色：60 ~ 80
-  red: 80                           # 紅色：80 以上
-```
-### Custom 卡片：自定義卡片
-自定義卡片通常需要安裝額外的外掛（例如 `HACS`）。
-```
-# 範例： 使用 custom:grid-layout 卡片（需安裝 grid-layout 外掛）
-type: custom:grid-layout  
-cards:                           # 在自定義卡片中嵌套其他卡片
-  - type: entities  
-    title: 我的設備狀態  
-    entities:  
-      - entity: light.living_room  
-        name: 客廳燈  
-  - type: gauge  
-    entity: sensor.temperature  
-    name: 室內溫度  
-    min: 0  
-    max: 100  
 ```
 
 
@@ -248,7 +197,107 @@ double_tap_action:
 可用的 action 類型：`more-info`、`toggle`、`perform-action`、`navigate`、`url`、`assist`、`none`。
 
 
-
 # 卡片首尾 ( Header & Footer)
+- 有些儀表板卡片支援標頭和頁尾部件（widgets）。這些部件會填滿卡片內的所有可用空間。
+- Header 和 Footer 部件可用於以下類型的卡片：**實體卡片 (Entity Card)**、**多實體卡片 (Entities Card)**、**統計卡片 (Statistic Card)**。
+
+### Picture header & footer
+圖片標頭或頁尾部件可用於在**卡片頂部 (header) 或底部 (footer) 顯示一張圖片**，該圖片可以與觸控操作（如點擊、長按或雙擊）相關聯。
+```
+header:  
+  type: picture                              # 設定 header 類型為 picture
+  image: "https://example.com/balloons.png"  # 圖片的 URL 地址
+  alt_text: "Balloons in the sky"            # (可選)	圖片的替代文字
+  tap_action:  
+    action: navigate  
+    navigation_path: "/lovelace/0"  
+  hold_action:  
+    action: none  
+  double_tap_action:  
+    action: toggle  
+```
+如果還需要頁尾部件，可以使用類似的配置，將 `header` 替換為 `footer` 即可。
+
+### Buttons header & footer 
+按鈕標頭或頁尾部件可用於在**卡片頂部 (header) 或底部 (footer) 顯示一組按鈕**，每個按鈕可以代表一個實體，並且可以執行特定的操作。
+```
+footer:  
+  type: buttons                            # 設定 footer 類型為 buttons
+  entities:                                # 要顯示的實體列表。每個項目可以是實體 ID 或包含詳細設置的映射。
+    - script.launch_confetti  
+    - entity: script.swirl_lights          # 要渲染的實體 ID
+      icon: "mdi:track-light"              # (可選) 覆蓋實體的圖示
+    - entity: script.run_siren  
+      image: https://example.com/sun.png   # (可選) 覆蓋實體的圖片 URL
+      name: "Activate Siren"               # (可選) 按鈕的標籤文字
+      show_icon: true                      # (可選) 是否顯示實體的圖示，默認 true
+      show_name: true                      # (可選) 是否顯示實體的名稱，默認 false 
+      tap_action:  
+        action: toggle  
+      hold_action:  
+        action: none  
+```
+
+### Graph header & footer
+- 圖表標頭或頁尾部件可用於在**卡片頂部 (header) 或底部 (footer) 顯示一個實體的數據圖表**。
+- 該圖表僅支援**感測器（sensor domain）類型**的實體。
+```
+footer:  
+  type: graph                              # 設定 footer 類型為 graph
+  entity: sensor.outside_temperature       # 要顯示的實體 ID，必須是感測器（sensor domain）的實體
+  hours_to_show: 24                        # 圖表中顯示的時間範圍（以小時計算）。默認 24 小時，最小值為 1 小時
+  detail: 1                                # 圖表的詳細程度，預設 1 (每小時 1 個數據點)，也可設為 2 (每小時 6 個數據點)
+```
 
 # 卡片介紹
+### Entities 卡片：列出和顯示多個設備的狀態
+這種類型的卡片適合顯示多個設備的狀態，例如燈光、開關、感測器等。
+```
+type: entities                   # entities 卡片
+title: 我的設備狀態  
+entities:                        # 列出需要顯示的實體。每個實體可以自定義名稱（name）。
+  - entity: light.living_room  
+    name: 客廳燈  
+  - entity: switch.kitchen  
+    name: 廚房開關  
+  - entity: sensor.temperature  
+    name: 室內溫度  
+```
+### Button 卡片：點擊按鈕來控制設備
+這種類型的卡片適合用於交互，比如開關燈光或啟動場景。
+```
+type: button                     # button 卡片
+entity: light.living_room        # 需要控制的設備（例如燈光或開關）
+name: 開關客廳燈  
+icon: mdi:lightbulb              # 按鈕的圖示（使用 Material Design Icons）
+```
+### Gauge 卡片：顯示數值型數據的可視化
+這種類型的卡片非常適合用來顯示**數值型數據的可視化**，例如溫度、濕度、電池電量等數據。
+```
+type: gauge                      # gauge 卡片
+entity: sensor.temperature       # 數值型的感測器（例如溫度、濕度）。
+name: 室內溫度  
+min: 0                           # 設定指針的最小值
+max: 100                         # 設定指針的最大值
+severity:                        # 定義不同顏色的範圍
+  green: 20                         # 綠色：20 以下
+  yellow: 60                        # 黃色：60 ~ 80
+  red: 80                           # 紅色：80 以上
+```
+### Custom 卡片：自定義卡片
+自定義卡片通常需要安裝額外的外掛（例如 `HACS`）。
+```
+# 範例： 使用 custom:grid-layout 卡片（需安裝 grid-layout 外掛）
+type: custom:grid-layout  
+cards:                           # 在自定義卡片中嵌套其他卡片
+  - type: entities  
+    title: 我的設備狀態  
+    entities:  
+      - entity: light.living_room  
+        name: 客廳燈  
+  - type: gauge  
+    entity: sensor.temperature  
+    name: 室內溫度  
+    min: 0  
+    max: 100  
+```
