@@ -38,7 +38,7 @@ ${\text{{\color{red}一旦通過 YAML 接管 UI 的控制，HA 網頁介面將�
 在 `configuration.yaml` 文件中新增以下部分：
 ```
 lovelace:
-  mode: yaml                       # 主儀表板 (main dashboard) 的模式，可以是 yaml 或 storage (用 UI managed)
+  mode: yaml                       # 主儀表板 (main dashboard) 的模式，可以是 yaml 或 storage (即 UI managed)
   resources:                       # 使用的外部資源，例如：JS 卡片文件、CSS 文件 (僅 yaml mode 下可用)
     - url: /local/myCustomCard.js      # 資源的 URL 路徑，可以是本地文件或外部 URL
       type: module                     # 資源的類型，可以是 module (為 JS 時) 或 css (為 CSS 時）。
