@@ -13,8 +13,7 @@
   -  實體章 (badge): [這裡](./Home%20Assistant/dashboard/badge.md)
 - **整合 (integration)**
   - 基本介紹：[這裡](./Home%20Assistant/integration/intro.md) 
-  - MQTT
-    - 加入 MQTT 裝置：[這裡](./Home%20Assistant/integration/mqtt.md)
+  - MQTT：[這裡](./Home%20Assistant/integration/mqtt.md)
   - Zigbee
   - Google Home
 - **自動化 (automation)**
