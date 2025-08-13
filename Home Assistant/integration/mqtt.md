@@ -45,7 +45,7 @@ mqtt:
 # 常見的 MQTT Device
 <table>
   <tr>
-    <td><a href="">Alarm control panel</a></td>
+    <td><a href="#">Alarm control panel</a></td>
     <td><a href="#">Binary sensor</a></td>
     <td><a href="#">Button</a></td>
     <td><a href="#">Camera</a></td>
@@ -100,7 +100,7 @@ mqtt:
 更改 `configuration.yaml` 後，請重啟 Home Assistant 以使用更改。
 
 ### 參數說明
-- 可用性相關參數
+- 可用性 (available) 相關參數
   | **參數** | **重要性** | **說明** |
   | ------- | ---- | -------- |
   | `availability_topic` | 可選 | (字串) 訂閱以接收設備可用性（在線/離線）狀態更新的 MQTT 主題。 |
@@ -124,11 +124,23 @@ mqtt:
   # value_json.status 表示提取 JSON 消息中的 status 屬性。
   # 例如 {"status": "online", "brightness": 255 } 會提取 status 屬性的值 "online"。
   ```
-
+  ```
+  light:  
+    name: "Bedroom Light"  
+    command_topic: "home/bedroom/light/switch"  
+    availability_topic: "home/bedroom/light/state"  # 當只有一個與可用性相關的 topic 時使用
+    payload_available: "online"
+    payload_not_available: "offline"
+    value_template: "{{ value_json.status }}"
+  ```
+- 亮度 (brightness) 相關參數
+  | **參數** | **重要性** | **說明** |
+  | ------- | ---- | -------- |
+  | `` |  |  |
 
 ### 範例
-# 支援亮度和 RGB 燈光
 ```
+# 支援亮度和 RGB 燈光
 mqtt:  
   - light:                                                      
       name: "Office Light RGB"  
