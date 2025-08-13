@@ -14,6 +14,18 @@ MQTT 整合的工作流程：
 
 ${\text{{\color{red}MQTT Device 和 entity 可以透過 MQTT discovery 或者手動使用 YAML 文件進行配置。}}}$
 
+# 加入 MQTT integration
+```
+1. 設定 --> 裝置與服務 --> 新增整合
+
+2. 從彈出的整合列表中，搜索並選擇 MQTT。
+
+3. 按照螢幕上的指示完成設置，例如：
+   - 輸入 MQTT 代理（Broker）的 IP 地址或主機名。
+   - 設置正確的 MQTT 用戶名和密碼（如果 broker 需要身份驗證）。
+   - 測試連線確保設置正確。
+```
+
 # 手動配置 YAML 文件
 在 `configuration.yaml` 檔中加入 MQTT 裝置，例如：
 ```
