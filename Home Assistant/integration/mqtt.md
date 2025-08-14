@@ -45,8 +45,8 @@ logger:
 
 # 在這裡加入 MQTT 裝置
 mqtt:
-  sensor:                                       # sensor 裝置
-    - name: "Bedroom Temperature"               # 裝置名稱
+  sensor:                                       # platform 為 sensor
+    - name: "Bedroom Temperature"               # sensor 裝置名稱
       state_topic: "home/bedroom/temperature"   # 訂閱 home/bedroom/temperature 主題
       # ...
     # ...
@@ -105,7 +105,7 @@ Light（燈具）、Switch（開關）、Sensor（感測器）、Binary Sensor�
 在 `configuration.yaml` 文件中添加以下內容：
 ```
 mqtt:
-  - light:                                        # 燈光 MQTT device
+  - light:                                        # platform 為 light
       command_topic: "office/rgb1/light/switch"   # 用來控制開關的 MQTT topic
 ```
 更改 `configuration.yaml` 後，請重啟 Home Assistant 以使用更改。
@@ -125,8 +125,8 @@ mqtt:
 | `optimistic` | 可選 | (boolean) 是否啟用樂觀模式 (定義：當 HA 發送控制命令時，不依賴於來自 `state_topic` 的狀態回應，就假設命令成功，並更新設備狀態。)<br/>如果 `state_topic` 已定義，則默認為 `false`。 |
 ```
 mqtt:
-  - light:
-      name: "Office light"                                     # 燈光的名稱，在 HA 中顯示為 "Office light"
+  light:
+    - name: "Office light"                                     # 燈光的名稱，在 HA 中顯示為 "Office light"
       state_topic: "office/light/status"                       # 用於接收燈光的狀態更新（例如 ON 或 OFF）的 MQTT 主題
       command_topic: "office/light/switch"                     # 用於控制燈光開啟或關閉的 MQTT 主題
       brightness_state_topic: 'office/light/brightness'        # 用於接收燈光亮度狀態的 MQTT 主題
