@@ -70,7 +70,7 @@ mqtt:
     <td><a href="#">Humidifier</a></td>
     <td><a href="#">Image</a></td>
     <td><a href="#">Lawn mower</a></td>
-    <td><a href="#light-device">Light</a></td>
+    <td><a href="#light">Light</a></td>
     <td><a href="#">Lock</a></td>
     <td><a href="#">Notify</a></td>
     <td><a href="#">Number</a></td>
@@ -80,7 +80,7 @@ mqtt:
     <td><a href="#">Select</a></td>
     <td><a href="#">Sensor</a></td>
     <td><a href="#">Siren</a></td>
-    <td><a href="#">Switch</a></td>
+    <td><a href="#switch">Switch</a></td>
     <td><a href="#">Text</a></td>
     <td><a href="#">Update</a></td>
     <td><a href="#">Vacuum</a></td>
@@ -92,7 +92,7 @@ mqtt:
 </table>
 Light（燈具）、Switch（開關）、Sensor（感測器）、Binary Sensor（二元感測器）、Button（按鈕）
 
-# Light Device
+# Light
 - MQTT燈光平台能讓您透過 `default` (默認)、`json` 或 `template` (模板) 的訊息架構來控制啟用了 MQTT 功能的燈光設備。
 - 以下僅介紹**使用默認 (`default`) 架構**控制啟用 MQTT 功能的燈光設備，它支援以下功能：設定亮度、色溫、效果、開/關、RGB 色彩、XY 色彩、白光。
 
@@ -118,8 +118,8 @@ mqtt:
 | `command_topic` | **必填** | (字串) 發佈到此 MQTT 主題以**改變設備的開關狀態**。 |
 | `state_topic` | 可選 | (字串) 訂閱的 MQTT 主題，用於接收設備的狀態更新。<br/>如果接收到 `None` 負載，設備狀態將重置為未知。<br/>如果接收到空負載，該負載將被忽略。 |
 | `state_value_template` | 可選 | (模板) 定義一個模板，用來從 `state_topic` 接收到的消息中提取狀態值。<br/>返回值應與 `payload_on` 和 `payload_off` 匹配。|
-| `payload_on` | 可選 | (字串) 表示關閉狀態的 payload，預設 `OFF`。 |
-| `payload_off` | 可選 | (字串) 表示開啟狀態的 payload，預設 `ON`。 |
+| `payload_off` | 可選 | (字串) 表示關閉狀態的 payload，預設 `OFF`。 |
+| `payload_on` | 可選 | (字串) 表示開啟狀態的 payload，預設 `ON`。 |
 | `qos` | 可選 | (整數) 設置接收和發佈 MQTT 消息時使用的最大 QoS（服務品質）級別，預設 `0`。 |
 | `retain` | 可選 | (boolean) 設置 MQTT 發佈的消息是否帶有保留標記（Retain Flag）。 |
 | `optimistic` | 可選 | (boolean) 是否啟用樂觀模式 (定義：當 HA 發送控制命令時，不依賴於來自 `state_topic` 的狀態回應，就假設命令成功，並更新設備狀態。)<br/>如果 `state_topic` 已定義，則默認為 `false`。 |
@@ -232,6 +232,96 @@ mqtt:
 ```
 
 
+# Switch
+MQTT Switch platform 讓您可以控制支援 MQTT 的開關設備。
+
+### 配置說明
+- 在理想情況下，MQTT 設備應具有一個 `state_topic` 來發布狀態 (status) 變更。
+- 如果這些訊息是使用 `RETAIN` 標誌發布的，MQTT 開關在訂閱後會立即接收到狀態更新，並且能夠正確地從正確狀態啟動。
+  - 否則，開關的初始狀態將是未知的。
+  - 此外，MQTT 設備可以使用 `None` 負載將當前狀態重置為未知。
+- 如果沒有提供 `state_topic`，則開關將運作於樂觀模式。
+  - 在此模式下，開關會在每次命令後立即改變狀態，而不等待設備的狀態確認（即來自 `state_topic` 的訊息）。
+  - 在樂觀模式下，開關的初始狀態設置為 `False` / `off`。
+- 即使存在 `state_topic`，也可以強制啟用樂觀模式(`optimistic: true`)，如果遇到開關操作不正確的情況，可以嘗試啟用此模式。
+```
+mqtt:
+  - switch:                                       # platform 為 switch 
+      command_topic: "home/bedroom/switch1/set"   # 用來控制開關的 MQTT topic
+```
+
+### 重要參數
+| **參數** | **重要性** | **說明** |
+| ------- | ---- | -------- |
+| `icon` | 可選 | (字串) 定義 entity 的圖示 (例如：`mdi:lightbulb`)。 |
+| `name` | 可選 | (字串) 顯示此開關的名稱，。預設 `MQTT Switch`。<br/>如果設為 `null`，則只顯示設備的名稱。 |
+| `entity_picture` | 可選 | (字串) 用於顯示 entity 的圖片 URL。 |
+| `entity_category` | 可選 | (字串) 設置實體的分類 (如 `diagnostic`、`config` 等)，此選項用於區分 entity 的用途。 |
+| **`command_topic`** | **必填** | (字串) 發佈到此 MQTT 主題以**改變設備的開關狀態**。 |
+| `payload_on` | 可選 | (字串) 開啟設備時，發送到 `command_topic` 主題的指令負載，預設 `ON`。 |
+| `payload_off` | 可選 | (字串) 關閉設備時，發送到 `command_topic` 主題的指令負載，預設 `OFF`。 |
+| `command_template` | 可選 | (模板) 定義要發送到 `command_topic` 的 payload 模板。<br/>模板中可以使用 `value` 參數，該參數包含配置的 `payload_on` 或 `payload_off` 值。 |
+| **`state_topic`** | 可選 | (字串) 訂閱的 MQTT 主題，用於接收設備的狀態更新。<br/>如果接收到 `None` 負載，設備狀態將重置為未知。<br/>如果接收到空負載，該負載將被忽略。 |
+| `state_on` | 可選 | (字串) 設備在 `state_topic` 主題中表示為開啟狀態的負載值。<br/> 預設為 `payload_on` 的值（如果定義），否則為 `ON`。 |
+| `state_off` | 可選 | (字串) 設備在 `state_topic` 主題中表示為關閉狀態的負載值，預設 `OFF`。<br/> 預設為 `payload_off` 的值（如果定義），否則為 `OFF`。 |
+| `value_template` | 可選 | (模板) 定義一個模板，用來從 `state_topic` 接收到的消息中提取狀態值。<br/>返回值應與 `state_on` 和 `state_off` 匹配。|
+| `qos` | 可選 | (整數) 設置接收和發佈 MQTT 消息時使用的最大 QoS（服務品質）級別，預設 `0`。 |
+| `retain` | 可選 | (boolean) 設置 MQTT 發佈的消息是否帶有保留標記（Retain Flag）。 |
+| `optimistic` | 可選 | (boolean) 是否啟用樂觀模式 (定義：當 HA 發送控制命令時，不依賴於來自 `state_topic` 的狀態回應，就假設命令成功，並更新設備狀態。)<br/>如果 `state_topic` 已定義，則默認為 `false`。 |
+```
+mqtt:
+  - switch:
+      unique_id: bedroom_switch                   # 唯一標識符，用於在 HA 中唯一識別這個開關
+      name: "Bedroom Switch"                      # 開關的顯示名稱，在 HA 中將以此名稱顯示
+      state_topic: "home/bedroom/switch1"         # 設備狀態將從 MQTT 主題 home/bedroom/switch1 接收
+      command_topic: "home/bedroom/switch1/set"   # 指令將發布到 MQTT 主題 home/bedroom/switch1/set
+      availability:
+        - topic: "home/bedroom/switch1/available"
+      payload_on: "ON"
+      payload_off: "OFF"
+      state_on: "ON"
+      state_off: "OFF"
+      optimistic: false
+      qos: 0
+      retain: true
+```
+
+### 可用性 (available) 相關參數
+| **參數** | **重要性** | **說明** |
+| ------- | ---- | -------- |
+| `availability_topic` | 可選 | (字串) 訂閱以接收設備可用性（在線/離線）狀態更新的 MQTT 主題。 |
+| `availability` | 可選 | (列表) 一組 MQTT 主題，用於訂閱設備的在線或離線 (online/offline) 狀態更新<br/>**配置了此選項，則不能同時使用 `availability_topic`** |
+| `payload_available` | 可選 | (字串) 當設備處於「可用狀態」時，接收到的 MQTT payload (默認 `online`) |
+| `payload_not_available` | 可選 | (字串) 當設備處於「不可用狀態」時，接收到的 MQTT payload (默認 `offline`) |
+| `topic`| **必填** | (字串) 用於接收設備的可用性（在線/離線）的 MQTT 主題。<br/>**僅在 `availability` 的子元素中使用**。 |
+| `value_template` | 可選 | (字串) 定義一個模板，模板的結果將與 `payload_available` 和 `payload_not_available` 進行比較，以確定設備的可用性。 |
+| `availability_mode` | 可選 | 將實體設置為「可用」所需的條件。<br/>`all`：只有當**所有配置的可用性主題**都收到 `payload_available` 時，設備才會被標記為在線。<br/>`any`：只要**至少有一個配置的可用性**主題收到 `payload_available`，設備就會被標記為在線。<br/>`latest`：最近一次收到的 `payload_available` 或 `payload_not_available` 控制設備的可用性。<br/>(默認 `latest`) |
+| `availability_template` | 可選 | (模板) 定義一個模板，用於從 `availability_topic` 中提取設備的可用性狀態。<br/>：此模板的結果將與 `payload_available` 和 `payload_not_available` 進行比較，以確定設備的可用性。 |
+使用 `availability_topic` (單一 MQTT 主題時)：
+```
+mqtt:
+  - switch:  
+      name: "MQTT Switch with Availability Topic"  
+      state_topic: "home/switch/status"  
+      command_topic: "home/switch/set"  
+      availability_topic: "home/switch/availability"   # 設備的可用性狀態通過 home/switch/availability 主題更新
+      payload_available: "online"  
+      payload_not_available: "offline"  
+```
+使用 `availability` (設備可用性狀態透過多個 MQTT 主題決定時)：
+```
+mqtt:
+  - switch:
+      name: "MQTT Switch with Multiple Availability Topics"  
+      state_topic: "home/switch/status"  
+      command_topic: "home/switch/set"  
+      availability:  
+        - topic: "device1/status"             # device1/status 主題 
+        - topic: "device2/status"             # device2/status 主題
+          payload_available: "online"  
+          payload_not_available: "offline"
+      availability_mode: "all"                # 只有當所有主題都接收到 online 時，設備才會標記為可用
+```
 
 
 
