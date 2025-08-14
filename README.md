@@ -1,8 +1,8 @@
 # 基本概念
 
 # 物聯網
-- MQTT：[這裡](./mqtt.md)
-- Zigbee：
+- MQTT：[這裡](./IOT/mqtt.md)
+- Zigbee：[這裡](./IOT/zigbee.md)
 - Matter：
 
 # Home Assistant
