@@ -18,7 +18,7 @@ docker container run -d \
     1. 設定 --> 裝置與設備 --> 新增整合 --> 搜尋「HACS」
 
     2. Authenticate the integration：
-   　　- HACS uses a device OAuth flow for authentication with GitHub
+       - HACS uses a device OAuth flow for authentication with GitHub
        - Copy the device code and select the link https://github.com/login/device
 
     3. Assign HACS to an 「area」 and select 「Finish」.
