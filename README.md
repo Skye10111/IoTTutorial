@@ -24,6 +24,8 @@
   - 基本介紹：[這裡](./Home%20Assistant/automation/basic.md)
 - **通知 (notification)**
   - 基本介紹：[這裡](./Home%20Assistant/notification/basic.md)
+- **其他**
+  - 網路喚醒：[這裡](./Home%20Assistant/others/WOL.md) 
 
 # 實際使用
 - 部署 MQTT & Home Assistant:  [這裡](./deployment/MQTT_HA.md)
