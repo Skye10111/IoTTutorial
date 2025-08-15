@@ -70,6 +70,11 @@
     - 無密碼登入遠端主機：`ssh -i ~/.ssh/id_rsa_homeassistant homeassistant@<遠端主機 IP>`
     - 無密碼重新啟動遠端主機：`ssh -i ~/.ssh/id_rsa_homeassistant homeassistant@<遠端主機 IP> sudo reboot`
     
-  
+# Home Assistant 設定  
+### 加入 WOL (Wake On Lan)) 整合
+
+### 加入 WOL 裝置
+
+### 設置 switch 卡片
 
 https://www.creatingsmarthome.com/index.php/2022/02/12/guide-start-up-and-shut-down-remote-linux-pc-using-home-assistant/
