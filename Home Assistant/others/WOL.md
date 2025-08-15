@@ -1,5 +1,5 @@
 # 簡介
-Wake-on-LAN 是通過在有線以太網（Ethernet）中發送特殊的「魔術封包」（Magic Packet）來喚醒處於休眠或關機狀態的設備。這些封包需要設備的網卡（Network Interface Card, NIC）在低功耗模式下仍然能夠接收和處理網絡封包。
+Wake-on-LAN 是通過在**有線以太網 (Ethernet)** 中發送特殊的「魔術封包」（Magic Packet）來喚醒處於休眠或關機狀態的設備。這些封包需要設備的網卡（Network Interface Card, NIC）在低功耗模式下仍然能夠接收和處理網絡封包。
 | 功能 | 做法 |
 | --- | ---- |
 | 開機 | **網路喚醒 (WOL, Wake On Lan)** 功能可以將電腦從低功率狀態 (睡眠、休眠及關機）遠端喚醒。 |
