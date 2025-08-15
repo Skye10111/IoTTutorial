@@ -34,15 +34,15 @@
   ```
 
 # SSH 預先設置
-- 通常使用關機指令關閉 Linux 遠端機器需要 root 使用者存取權限，顯然我們**不想在出現安全漏洞等情況下**授予 Home Assistant 完全 root 存取權。
-- 因此，在遠端主機為 Home Assistant 建立一個新用戶：
+- 通常使用關機指令關閉 Linux 遠端機器需要 root 使用者存取權限，顯然我們**不想在出現安全漏洞等情況下**授予 Home Assistant 完全 root 存取權。因此，進行以下操作。
+- **在遠端主機為 Home Assistant 建立一個新用戶**
   - 即：之後 HA 會使用這個身份在 SSH 下達關機指令給遠端主機。
   ```
   sudo adduser homeassistant
   
   # 接著填寫所需信息 (包括密碼)，稍後會用到。
   ```
-- 授予 homeassistant 使用者有 reboot 的權限 (編輯 `sodoers` 檔案)：
+- **授予 homeassistant 使用者有 reboot 的權限** (編輯 `sodoers` 檔案)：
   ```
   sudo visudo
 
@@ -52,7 +52,7 @@
   homeassistant ALL=(ALL) NOPASSWD: /sbin/poweroff, /sbin/reboot, /sbin/shutdown
   ```
   完成後，儲存 (`ctrl + O`) 並退出 (`ctrl + X`)。
-- 建立 SSH key pair
+- **建立 SSH key pair**
   - 在 HA 所在主機，生成 public & private 金鑰：
     ```
     ssh-keygen -t rsa -f ~/.ssh/id_rsa_homeassistant
