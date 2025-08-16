@@ -11,7 +11,7 @@ Home Assistant 內建**語音助理**的工作邏輯（自己是 Agent 接取 LL
 
 ### HA 作為 MCP server
 
-- **伺服器發送事件 (Server-Sent Events)**
+- **伺服器發送事件 (SSE, Server-Sent Events)**
   - SSE 是一種 Web 技術，允許伺服器向客戶端(通常是瀏覽器) 推送即時更新。
   - SSE 使用 HTTP 協議，**伺服器只需開啟一個 HTTP 連接，然後持續向客戶端傳送數據，而不需要客戶端不斷輪詢**。
   - SSE 適用於各種需要即時資料推播的場景，例如股票行情更新、社群媒體通知等。
