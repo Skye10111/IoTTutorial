@@ -7,3 +7,4 @@ Home Assistant 作為一個全能的開源智慧家庭平台，它也內建了 M
 
 # HA 作為 MCP client
 Home Assistant 內建**語音助理**的工作邏輯（自己是 Agent 接取 LLM + MCP server）
+![image](./mcp_client.png)
