@@ -31,6 +31,7 @@
     - https://gist.github.com/allenporter/b0e9946feb2ab60901c4f467ac1ba6f9
     - https://www.home-assistant.io/integrations/mcp_server/
     - https://linux.do/t/topic/639309
+    - https://www.bilibili.com/video/BV1SruXzqEW5/
 - **其他**
   - 網路喚醒：[這裡](./Home%20Assistant/others/WOL.md)
 
