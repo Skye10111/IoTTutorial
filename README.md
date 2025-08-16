@@ -25,7 +25,7 @@
 - **通知 (notification)**
   - 基本介紹：[這裡](./Home%20Assistant/notification/basic.md)
 - **AI 功能**
-  - Homa Assistant LLM 整合：
+  - Home Assistant API for LLM：https://developers.home-assistant.io/docs/core/llm/ 
   - Homa Assistant MCP 整合：https://gist.github.com/allenporter/b0e9946feb2ab60901c4f467ac1ba6f9
   
 - **其他**
