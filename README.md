@@ -32,6 +32,7 @@
     - https://www.home-assistant.io/integrations/mcp_server/
     - https://linux.do/t/topic/639309
     - https://www.bilibili.com/video/BV1SruXzqEW5/
+    - https://bbs.hassbian.com/forum.php?mod=viewthread&tid=29856&extra=&ordertype=1&page=1
 - **其他**
   - 網路喚醒：[這裡](./Home%20Assistant/others/WOL.md)
 
