@@ -1,9 +1,9 @@
 # 基本概念
 
-# 物聯網
+# 通訊協議
 - MQTT：[這裡](./IOT/mqtt.md)
 - Zigbee：[這裡](./IOT/zigbee.md)
-- Matter：
+- Matter：[這裡](./IOT/matter.md)
 
 # Home Assistant
 - 簡介：[這裡](./Home%20Assistant/intro.md)
@@ -19,7 +19,7 @@
   - 基本介紹：[這裡](./Home%20Assistant/integration/intro.md) 
   - MQTT：[這裡](./Home%20Assistant/integration/mqtt.md)
   - Zigbee
-  - Google Home
+  - Matter
 - **自動化 (automation)**
   - 基本介紹：[這裡](./Home%20Assistant/automation/basic.md)
 - **通知 (notification)**
