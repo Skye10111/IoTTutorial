@@ -27,7 +27,7 @@
 - **AI 功能**
   - Home Assistant API for LLM：
     - https://developers.home-assistant.io/docs/core/llm/ 
-  - Homa Assistant MCP 整合：
+  - Homa Assistant MCP 整合：[這裡](./Home%20Assistant/AI/mcp.md)
     - https://gist.github.com/allenporter/b0e9946feb2ab60901c4f467ac1ba6f9
     - https://www.home-assistant.io/integrations/mcp_server/
     - https://linux.do/t/topic/639309
