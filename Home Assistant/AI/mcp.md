@@ -18,3 +18,9 @@ Home Assistant 原生透過 SSE （Server-Sent Events）協定暴露 MCP Server�
   - SSE 適用於各種需要即時資料推播的場景，例如股票行情更新、社群媒體通知等。
   - 與 WebSocket 相比，SSE 更加簡單易用，但它是**單向通信**，只能由伺服器向客戶端推送資料。
 
+### HA 的腳本
+- HA 的腳本其實就是一個**自訂 function** 的大殺器。
+- 一句話的描述就是可以**透過 `fields` 給腳本傳遞參數，同時根據你的描述訊息，HA 也會自動將你的腳本轉換成一個 function 給 LLM**。
+  - https://www.home-assistant.io/integrations/script/#fields
+  - https://www.home-assistant.io/integrations/script/#passing-variables-to-scripts
+
