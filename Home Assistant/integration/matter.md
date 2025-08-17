@@ -88,7 +88,7 @@ Matter 設備資訊部分提供了設備的一些診斷信息，幫助您了解�
 | 網絡類型<br/>(Network type) | 顯示設備所屬的網絡類型，例如：<br/>**Thread**：基於低功耗網狀網絡的通信技術，通常用於智能家居設備。<br/>**Wi-Fi**：基於 Wi-Fi 網絡進行通信，適用於高流量需求的設備。 |
 | 設備類型<br/>(Device type) | Matter 設備類型分為以下 4 種：<br/>**終端設備（End device）**：始終保持其無線電開啟，通常不是電池供電的設備 (如：插座)。<br/>**休眠終端設備（Sleepy end device）**：不具路由功能，常處休眠狀態的設備，偶爾醒來動作 (如：感測器)。<br/>**路由終端設備（Routing end device）**：始終保持無線電開啟，並能為其他設備進行流量路由。<br/>**網橋（Bridge）**：將非 Matter 設備或子網絡整合到 Matter 網絡中 (如： Aqara Hub)。 |
 | 網絡名稱<br/>(Network name) | 顯示設備在配對（commissioning）時加入的網絡名稱。 |
-| IP 地址（IP addresses) | 通常顯示多個 IPv6 地址 (如果設備支持 IPv4，這裡也會顯示 IPv4 地址)。 |
+| IP 地址<br/>(IP addresses) | 通常顯示多個 IPv6 地址 (如果設備支持 IPv4，這裡也會顯示 IPv4 地址)。 |
 
 # 在 HA 中共享來自其他平台的設備
 如果您已將 Matter 設備添加到 Apple Home 或 Google Home，並希望能夠同時從 Apple Home 或 Google Home 以及 Home Assistant 控制它，請使用以下方法。
