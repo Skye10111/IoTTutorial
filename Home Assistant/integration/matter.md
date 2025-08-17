@@ -7,6 +7,7 @@
 - 如果您以其他方式運行 Home Assistant（例如在容器中運行），Matter 附加元件的支持可能有限，並且需要您自行解決可能出現的問題。
   - 在容器化環境中運行 Matter Server 可能需要額外的配置，例如網絡設置和端口映射。
   - 使用容器時，Matter 整合可能不如 Home Assistant OS 中的附加元件穩定。
+  - 容器下安裝說明：https://github.com/home-assistant-libs/python-matter-server
 
 # 將 Matter 設備添加到 Home Assistant
 - 在 Matter 技術中，每個 Matter 網絡被稱為「Fabric」，每個控制 Matter 設備的家庭自動化控制器都有自己的 Fabric。
