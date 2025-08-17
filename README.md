@@ -19,7 +19,7 @@
   - 基本介紹：[這裡](./Home%20Assistant/integration/intro.md) 
   - MQTT：[這裡](./Home%20Assistant/integration/mqtt.md)
   - Zigbee
-  - Matter
+  - Matter：[這裡](./Home%20Assistant/integration/matter.md)
 - **自動化 (automation)**
   - 基本介紹：[這裡](./Home%20Assistant/automation/basic.md)
 - **通知 (notification)**
