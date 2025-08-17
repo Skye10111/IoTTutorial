@@ -10,7 +10,8 @@ Home Assistant 內建**語音助理**的工作邏輯（自己是 Agent 接取 LL
 ![image](./mcp_client.png)
 
 ### HA 作為 MCP server
-
+Home Assistant 原生透過 SSE （Server-Sent Events）協定暴露 MCP Server，這樣就可以存取 Home Assistant 所有已經整合的外部 MCP Server，像使用自己的「能力庫」一樣呼叫它們，無需重複開發。
+![image](./mcp_server.png)
 - **伺服器發送事件 (SSE, Server-Sent Events)**
   - SSE 是一種 Web 技術，允許伺服器向客戶端(通常是瀏覽器) 推送即時更新。
   - SSE 使用 HTTP 協議，**伺服器只需開啟一個 HTTP 連接，然後持續向客戶端傳送數據，而不需要客戶端不斷輪詢**。
