@@ -64,3 +64,93 @@ Static Context: An overview of the areas and the devices in this smart home:
   domain: ...
 ```
 
+# HA 的 tool
+### HassTurnOn 工具
+  - `name` 屬性：HassTurnOn
+  - `description` 屬性：
+    ```
+    Turns on/opens/presses a device or entity. For locks, this performs a 'lock' action. Use for requests like 'turn on', 'activate', 'enable', or 'lock'.
+    ```
+  - `inputSchema` 屬性：
+    ```
+    {
+      'type': 'object',
+      'properties': {
+        'name'   : { 'type': 'string'},
+        'area'   : { 'type': 'string'},
+        'floor'  : { 'type': 'string'},
+        'domain' : { 'type': 'array', 'items': {'type': 'string'} },
+        'device_class': {
+          'type': 'array',
+          'items': {
+            'type': 'string',
+            'enum': [
+              'awning', 'blind', 'curtain', 'damper', 'door', 'garage', 'gate', 'shade', 'shutter', 'window',
+              'identify', 'restart', 'update', 'tv', 'speaker', 'receiver', 'water', 'gas', 'outlet', 'switch'
+            ]
+          }
+        }
+      }
+    }
+    ```
+### HassTurnOff 工具
+  - `name` 屬性：HassTurnOff
+  - `description` 屬性：
+    ```
+    Turns off/closes a device or entity. For locks, this performs an 'unlock' action. Use for requests like 'turn off', 'deactivate', 'disable', or 'unlock'.
+    ```
+  - `inputSchema` 屬性：
+    ```
+    {
+      'type': 'object',
+      'properties': {
+        'name'  : { 'type': 'string' },
+        'area'  : { 'type': 'string' },
+        'floor' : { 'type': 'string' },
+        'domain': { 'type': 'array', 'items': {'type': 'string'} },
+        'device_class': {
+          'type'   : 'array',
+          'items'  : {
+            'type' : 'string',
+            'enum' : [
+              'awning', 'blind', 'curtain', 'damper', 'door', 'garage', 'gate', 'shade', 'shutter', 'window',
+              'identify', 'restart', 'update', 'tv', 'speaker', 'receiver', 'water', 'gas', 'outlet', 'switch'
+            ]
+          }
+        }
+      }
+    }
+    ```
+
+
+  
+------------------------
+name: HassCancelAllTimers
+description: Cancels all timers
+inputSchema:
+  {'type': 'object', 'properties': {'area': {'type': 'string'}}}
+------------------------
+name: HassListAddItem
+description: Add item to a todo list
+inputSchema:
+  {'type': 'object', 'properties': {'item': {'type': 'string'}, 'name': {'type': 'string'}}}
+------------------------
+name: HassListCompleteItem
+description: Complete item on a todo list
+inputSchema:
+  {'type': 'object', 'properties': {'item': {'type': 'string'}, 'name': {'type': 'string'}}}
+------------------------
+name: HassLightSet
+description: Sets the brightness percentage or color of a light
+inputSchema:
+  {'type': 'object', 'properties': {'name': {'type': 'string'}, 'area': {'type': 'string'}, 'floor': {'type': 'string'}, 'domain': {'type': 'array', 'items': {'type': 'string'}}, 'color': {'type': 'string'}, 'temperature': {'type': 'integer', 'minimum': 0}, 'brightness': {'type': 'integer', 'minimum': 0, 'maximum': 100, 'description': 'The brightness percentage of the light between 0 and 100, where 0 is off and 100 is fully lit'}}}
+------------------------
+name: todo_get_items
+description: Query a to-do list to find out what items are on it. Use this to answer questions like 'What's on my task list?' or 'Read my grocery list'. Filters items by status (needs_action, completed, all).
+inputSchema:
+  {'type': 'object', 'properties': {'todo_list': {'type': 'string', 'enum': ['購物清單']}, 'status': {'type': 'string', 'enum': ['needs_action', 'completed', 'all'], 'description': 'Filter returned items by status, by default returns incomplete items', 'default': 'needs_action'}}}
+------------------------
+name: GetLiveContext
+description: Provides real-time information about the CURRENT state, value, or mode of devices, sensors, entities, or areas. Use this tool for: 1. Answering questions about current conditions (e.g., 'Is the light on?'). 2. As the first step in conditional actions (e.g., 'If the weather is rainy, turn off sprinklers' requires checking the weather first).
+inputSchema:
+  {'type': 'object', 'properties': {}}
