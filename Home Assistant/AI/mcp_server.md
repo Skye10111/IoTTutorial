@@ -76,10 +76,10 @@ Static Context: An overview of the areas and the devices in this smart home:
     {
       'type': 'object',
       'properties': {
-        'name'   : { 'type': 'string'},
-        'area'   : { 'type': 'string'},
-        'floor'  : { 'type': 'string'},
-        'domain' : { 'type': 'array', 'items': {'type': 'string'} },
+        'name'        : { 'type': 'string'},
+        'area'        : { 'type': 'string'},
+        'floor'       : { 'type': 'string'},
+        'domain'      : { 'type': 'array', 'items': {'type': 'string'} },
         'device_class': {
           'type': 'array',
           'items': {
