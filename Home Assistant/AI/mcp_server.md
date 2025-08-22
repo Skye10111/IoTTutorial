@@ -226,7 +226,8 @@ Static Context: An overview of the areas and the devices in this smart home:
 - `name` 屬性：**GetLiveContext**
 - `description` 屬性：
   ```
-  Provides real-time information about the CURRENT state, value, or mode of devices, sensors, entities, or areas. Use this tool for:
+  Provides real-time information about the CURRENT state, value, or mode of devices, sensors, entities, or areas.
+  Use this tool for:
   1. Answering questions about current conditions (e.g., 'Is the light on?').
   2. As the first step in conditional actions (e.g., 'If the weather is rainy, turn off sprinklers' requires checking the weather first).
   ```
