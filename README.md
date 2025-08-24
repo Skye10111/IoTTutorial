@@ -1,9 +1,9 @@
 # 基本概念
 
 # 通訊協議
-- MQTT：[這裡](./IOT/mqtt.md)
-- Zigbee：[這裡](./IOT/zigbee.md)
-- Matter：[這裡](./IOT/matter.md)
+- MQTT：[這裡](./IoT/mqtt.md)
+- Zigbee：[這裡](./IoT/zigbee.md)
+- Matter：[這裡](./IoT/matter.md)
 
 # Home Assistant
 - 簡介：[這裡](./Home%20Assistant/intro.md)
