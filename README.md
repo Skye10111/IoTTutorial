@@ -9,6 +9,7 @@
 - 簡介：[這裡](./Home%20Assistant/intro.md)
 - 安裝：[這裡](./Home%20Assistant/install.md)
 - 基本配置：[這裡](./Home%20Assistant/basicConfig.md)
+- 配置檔切割：[這裡](./Home%20Assistant/splitYAML.md)
 - **儀表板 (dashboard)**
   -  簡介：[這裡](./Home%20Assistant/dashboard/intro.md)
   -  使用 YAML 編輯儀表板：[這裡](./Home%20Assistant/dashboard/yaml.md)
