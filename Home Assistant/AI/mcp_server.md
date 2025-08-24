@@ -1,4 +1,9 @@
 # 建立 HA 的 MCP server
+
+| Feature	| Prompts | Tools | Resources | Sampling | Notifications |
+| ------- | ------- | ----- | --------- | -------- | ------------- |
+|  **Supported by HA** | ✅ | ✅ | ❌ | ❌ | ❌ |
+
 - 加入 MCP server 整合
   ```
   設定 --> 裝置與服務 --> 新增「Model Context Protocol Server」整合
