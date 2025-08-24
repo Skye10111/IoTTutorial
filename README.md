@@ -30,7 +30,9 @@
     - https://developers.home-assistant.io/docs/core/llm/ 
   - Homa Assistant MCP 整合：
     - 概念：[這裡](./Home%20Assistant/AI/mcp.md)
-    - 使用 HA MCP server：[這裡](./Home%20Assistant/AI/mcp_server.md)
+    - HA MCP server
+      - 使用教學：[這裡](./Home%20Assistant/AI/mcp_server.md)
+      - 燈光範例：[這裡](./Home%20Assistant/AI/mcp_server_light_demo.md)
     - https://gist.github.com/allenporter/b0e9946feb2ab60901c4f467ac1ba6f9
     - https://www.home-assistant.io/integrations/mcp_server/
     - https://linux.do/t/topic/639309
