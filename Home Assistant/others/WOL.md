@@ -81,3 +81,5 @@ Wake-on-LAN 是通過在**有線以太網 (Ethernet)** 中發送特殊的「魔�
 ### 設置 switch 卡片
 
 https://www.creatingsmarthome.com/index.php/2022/02/12/guide-start-up-and-shut-down-remote-linux-pc-using-home-assistant/
+
+https://www.home-assistant.io/integrations/wake_on_lan/
