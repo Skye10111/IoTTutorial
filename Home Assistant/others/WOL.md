@@ -36,6 +36,43 @@ Wake-on-LAN 是通過在**有線以太網 (Ethernet)** 中發送特殊的「魔�
   5. 按壓鍵盤 F10 鍵，點選 Ok，保存選項，電腦重啟後，啟用網路喚醒功能。 
   ```
 
+# Ubuntu啟用Wake-On-Lan服務
+- 請確認電腦有接上有線乙太網路
+- 使用 `ip link` 指令確認網路卡裝置的 MAC 位址，例如我的網路卡裝置為 `enp2s0`，MAC 位址為 `e3:e3:1b:41:f5:fa`，把這個 MAC 位址記下來
+  ```
+  2: enp2s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+     link/ether e3:e3:1b:41:f5:fa brd ff:ff:ff:ff:ff:ff
+  ```
+- 列出目前的連線，例如我的乙太網路連線名稱叫做 "eth0"
+  ```
+  nmcli con show
+  ```
+  查看乙太網路連線的Wake-On-Lan狀態
+  ```
+  nmcli c show "eth0" | grep 802-3-ethernet.wake-on-lan
+  
+  # 應該是沒有啟用，顯示為 default
+  # 802-3-ethernet.wake-on-lan:             default
+  # 802-3-ethernet.wake-on-lan-password:    --
+  ```
+- 啟用Wake-On-Lan
+  ```
+  nmcli c modify "eth0" 802-3-ethernet.wake-on-lan magic
+  nmcli c modify "eth0" 802-3-ethernet.auto-negotiate yes
+  ```
+- 將Ubuntu重開機
+  ```
+  sudo reboot
+  ```
+  再次執行指令，查看Wake-On-Lan是否維持啟用狀態。
+  ```
+  nmcli c show "eth0" | grep 802-3-ethernet.wake-on-lan
+
+  # 應該會顯示magic
+  # 802-3-ethernet.wake-on-lan:             magic
+  # 802-3-ethernet.wake-on-lan-password:    --
+  ```
+
 # SSH 預先設置
 - 通常使用關機指令關閉 Linux 遠端機器需要 root 使用者存取權限，顯然我們**不想在出現安全漏洞等情況下**授予 Home Assistant 完全 root 存取權。因此，進行以下操作。
 - **在遠端主機為 Home Assistant 建立一個新用戶**
@@ -74,7 +111,7 @@ Wake-on-LAN 是通過在**有線以太網 (Ethernet)** 中發送特殊的「魔�
     - 無密碼重新啟動遠端主機：`ssh -i ~/.ssh/id_rsa_homeassistant homeassistant@<遠端主機 IP> sudo reboot`
     
 # Home Assistant 設定  
-### 加入 WOL (Wake On Lan)) 整合
+### 加入 WOL (Wake On Lan) 整合
 
 ### 加入 WOL 裝置
 
@@ -83,3 +120,13 @@ Wake-on-LAN 是通過在**有線以太網 (Ethernet)** 中發送特殊的「魔�
 https://www.creatingsmarthome.com/index.php/2022/02/12/guide-start-up-and-shut-down-remote-linux-pc-using-home-assistant/
 
 https://www.home-assistant.io/integrations/wake_on_lan/
+
+# 補充：使用指令執行 WOL
+- 在同一個網域下，開啟另一台電腦（跳板機）。
+- 安裝 wol工具：
+  - Ubuntu：`sudo apt install wakeonlan`。
+  - MAC：`brew install wakeonlan`。
+- 指定想要緩醒主機的 MAC 位址，發送魔法封包
+  ```
+  wakeonlan "e3:e3:1b:41:f5:fa"
+  ```
